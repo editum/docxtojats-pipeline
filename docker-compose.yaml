@@ -1,0 +1,30 @@
+services:
+  doc2jats-pipeline:
+    image: doc2jats-pipeline
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile.7.4-apache-bullseye
+      args:
+        APP_NAME: ${APP_NAME:-doc2jats-pipeline}
+        PUSER: ${PUSER:-app}
+        PGROUP: ${PGROUP:-app}
+        PUID: ${PUID:-1000}
+        PGID: ${PGID:-1000}
+    environment:
+      APP_ENV: dev
+      PHP_CUSTOM_INI: |
+        upload_max_filesize=100M
+        post_max_size=200M
+        memory_limit=512M
+        max_execution_time=120
+    ports:
+      - 8000:80
+    env_file:
+      - .env
+    restart: unless-stopped
+    tty: true
+    working_dir: /opt/doc2jats-pipeline
+    volumes:
+      - ./:/opt/doc2jats-pipeline
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

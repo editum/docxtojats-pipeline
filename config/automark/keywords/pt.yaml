@@ -1,0 +1,27 @@
+# 🇵🇹 PT — Português
+keywords:
+  # Usado para detectar seções de bibliografia pelo título
+  bibliography:
+    - Referências
+    - Bibliografia
+    - Obras citadas
+    - Literatura citada
+    - Fontes
+    # Às vezes antes da bibliografia
+    - Conclusão
+    - Conclusões
+    # Em livros ou capítulos
+    - Notas e referências
+    # Humanidades / divulgação
+    - Leituras recomendadas
+
+  # Usado para detectar títulos de figuras
+  figure:
+    - gráfico
+    - figura
+    - imagem
+    - ilustração
+
+  # Usado para detectar títulos de tabelas
+  table:
+    - tabela

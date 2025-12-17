@@ -1,0 +1,28 @@
+# 🇪🇸 ES — Español
+keywords:
+  # Usado para detectar secciones de bibliografía por el título
+  bibliography:
+    - Referencias
+    - Bibliografía
+    - Obras citadas
+    - Literatura citada
+    - Fuentes
+    # A veces aparece antes de la bibliografía
+    - Conclusión
+    - Conclusiones
+    # En libros o capítulos
+    - Notas y referencias
+    # Humanidades / divulgación
+    - Lecturas recomendadas
+
+  # Usado para detectar títulos de figuras
+  figure:
+    - gráfico
+    - figura
+    - imagen
+    - ilustración
+
+  # Usado para detectar títulos de tablas
+  table:
+    - tabla
+    - cuadro

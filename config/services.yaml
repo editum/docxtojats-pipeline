@@ -1,0 +1,104 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    # External tools
+    anystyle.bin: "%env(string:ANYSTYLE_BIN)%"
+    exiftool.bin: "%env(string:EXIFTOOL_BIN)%"
+    libreoffice.bin: '%env(string:LIBREOFFICE_BIN)%'
+    pandoc.bin: "%env(string:PANDOC_BIN)%"
+    # Permissions
+    dirmode:  "%env(default:default_dirmode:int:DIRMODE)%"
+    default_dirmode: 0777
+    filemode: "%env(default:default_filemode:int:FILEMODE)%"
+    default_filemode: 0644
+    # Remote execution
+    anonimizer.url: "%env(default::string:ANONIMIZER_URL)%"
+    normalizer.url: "%env(default::string:NORMALIZER_URL)%"
+    doctojats.url:  "%env(default::string:DOCTOJATS_URL)%"
+    jatspubliser.url: "%env(default::string:JATSPUBLISHER_URL)%"
+    # Automark
+    automark.keywords.dir: '%kernel.project_dir%/config/automark/keywords'
+    automark.lookup_tables.dir: '%kernel.project_dir%/config/automark'
+    automark.training.path: "$env(default::string:TRAINING_PATH)%"
+    automark.training.enabled: "$nev(default:false:string:TRAINING_ENABLED)%"
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            float $conversionTimeout: '%env(float:CONVERSION_TIMEOUT)%'
+            int $dirmode: '%dirmode%'
+            int $filemode: '%filemode%'
+            string $libreoffice: '%libreoffice.bin%'
+            string $libreofficeHome: '%env(string:LIBREOFFICE_HOME)%'
+            string $exiftool: '%exiftool.bin%'
+            string $pandoc: '%pandoc.bin%'
+            string $anystyle: "%anystyle.bin%"
+            string $automarkKeywordsDir: "%automark.keywords.dir%"
+
+            int $maxUploadFileSize: 100
+            string $maxUploadFileSize: 100M
+
+    _instanceof:
+        App\Service\Automark\Dom\CitationStyle\CitationStyleInterface:
+            tags: ['automark.citation.style']
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    # Automark
+    App\Service\Automark\Inf\LookupFactory:
+        arguments:
+            $keywordsDir: '%automark.keywords.dir%'
+            $lookupTablesDir: '%automark.lookup_tables.dir%'
+        shared: true
+
+    App\Service\Automark\Dom\BibliographyTextExtractor:
+        $keywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getBibliographyKeywords()'
+    App\Service\Automark\Dom\Caption\FiguresCaptionSetter:
+        $keywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getFigureKeywords()'
+    App\Service\Automark\Dom\Caption\TablesCaptionSetter:
+        $keywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getTableKeywords()'
+
+    App\Service\Automark\Dom\BibliographyGenerator:
+        arguments:
+            $csl2jatsPublicationTypeMap: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getCsl2JatsPublicationTypeMap()'
+            $publicationTitleTagMap: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getPublicationTitleTagMap()'
+
+
+    App\Service\Automark\Dom\CitationStyle\CitationStyleFactory:
+        $styleLocator: !tagged_iterator { tag: 'automark.citation.style', default_index_method: 'name' }
+
+    # Commands
+    App\Command\DocAnonymizerCommand:
+        $inputExtensions: ['odf', 'doc','docx']
+        $remoteUrl: '%anonimizer.url%'
+    App\Command\DocNormalizerCommand:
+        $inputExtensions: ['odf', 'doc','docx']
+        $remoteUrl: '%normalizer.url%'
+    App\Command\DocToJatsCommand:
+        $inputExtensions: ['odf', 'doc','docx']
+        $remoteUrl: '%doctojats.url%'
+    App\Command\JatsPublisherCommand:
+        $inputExtensions: ['xml']
+        $remoteUrl: '%jatspubliser.url%'
+
+    # Others
+    App\Service\DocConversion\App\JatsPublisher:
+        $bin: '%kernel.project_dir%/bin/jats2html-pdf.sh'
+
+    App\Validator\FileValidator:
+        tags: [ 'validator.constraint_validator' ]

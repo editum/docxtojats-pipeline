@@ -1,0 +1,30 @@
+# 🇫🇷 FR — Français
+keywords:
+
+  # Utilisé pour détecter les sections de bibliographie par le titre
+  bibliography:
+    - Références
+    - Bibliographie
+    - Ouvrages cités
+    - Travaux cités
+    - Littérature citée
+    - Sources
+    # Parfois avant la bibliographie
+    - Conclusion
+    - Conclusions
+    # Livres ou chapitres
+    - Notes et références
+    # Sciences humaines / vulgarisation
+    - Lectures recommandées
+
+  # Utilisé pour détecter les titres des figures
+  figure:
+    - graphique
+    - figure
+    - image
+    - illustration
+    - chiffre
+
+  # Utilisé pour détecter les titres des tableaux
+  table:
+    - tableau

@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1 20151215//EN" "https://jats.nlm.nih.gov/publishing/1.1/JATS-journalpublishing1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="es" dtd-version="1.1" specific-use="sps-1.9">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">RevDemo</journal-id>
+      <journal-title>Revista de Ejemplo</journal-title>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>Ejemplo de Documento JATS con Notas</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name><surname>Pérez</surname><given-names>Ana</given-names></name>
+        </contrib>
+        <contrib contrib-type="author">
+          <name><surname>Martínez</surname><given-names>Carlos</given-names></name>
+        </contrib>
+      </contrib-group>
+      <author-notes>
+        <fn id="afn1"><p>Ana Pérez agradece la financiación del proyecto XYZ.</p></fn>
+        <fn id="afn2"><p>Carlos Martínez declara no tener conflictos de interés.</p></fn>
+        <fn id="afn3"><p>Este trabajo fue presentado en el Congreso ABC 2025.</p></fn>
+        <fn id="afn4"><p>Correspondencia a: ana.perez@example.org.</p></fn>
+      </author-notes>
+      <pub-date>
+        <year>2025</year>
+      </pub-date>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec1">
+      <title> Background</title>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit <xref ref-type="fn" rid="fn1">Nota 1</xref>. Donec ornare mattis feugiat. Nam metus mauris, egestas congue odio quis, egestas laoreet justo (<xref ref-type="bibr" rid="bib1">Cloitre et al. 2013</xref>). Aliquam erat volutpat. Curabitur at quam non diam interdum rhoncus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus (<xref ref-type="bibr" rid="bib14">Sareen 2014</xref>). Praesent non nisl vehicula justo consectetur porttitor non interdum ex. Nunc porta purus ante, eget faucibus ante tempor eget. Ut vitae commodo quam, non mattis odio. In ultrices risus eget pulvinar facilisis. Vivamus nec nisl libero (<xref ref-type="bibr" rid="bib14">Sareen 2014</xref>). Etiam velit neque, ullamcorper id ornare in, pharetra vel magna (<xref ref-type="bibr" rid="bib2">Ehlers y Clark 2000</xref>; <xref ref-type="bibr" rid="bib11">Nemeroff et al. 2006</xref>; <xref ref-type="bibr" rid="bib16">Smith-Lovin, Lewis, y Haviland 1995</xref>). Ut vehicula pellentesque quam, et aliquam massa volutpat eget . Suspendisse potenti. Sed ultricies nibh eu felis consectetur pellentesque.</p>
+      <p>In et tellus bibendum, fermentum massa id, mollis nisl. Vestibulum malesuada vehicula metus ac condimentum. Morbi quis massa aliquet turpis pharetra varius at eu sem. Phasellus sed pretium ligula, sed ultrices tellus (<xref ref-type="bibr" rid="bib15">Shin, Rauch, y Pitman 2006</xref>). Donec aliquam sodales ligula dapibus vehicula. Mauris a eros in diam posuere iaculis quis vel ipsum (<xref ref-type="bibr" rid="bib2">Ehlers y Clark 2000</xref>; <xref ref-type="bibr" rid="bib7">George 2000</xref>). Duis iaculis condimentum lobortis. Donec non tristique ipsum, ut posuere massa . Morbi ante tellus, semper vitae justo a, consectetur accumsan nunc. Duis sed vulputate ante. Duis vel imperdiet neque. Vestibulum risus mauris, rhoncus id elementum a, ultrices eget sem. Mauris luctus dui at lectus interdum, non aliquet orci laoreet.</p>
+      <p><bold>Integer sed posuere enim.</bold> Praesent interdum, nisl at porttitor auctor, magna justo semper tellus, quis molestie nunc turpis ut eros. Phasellus ultrices consequat est a bibendum. Nam fermentum pretium erat vel varius. In auctor non risus eget laoreet. Aliquam ut elit id ante blandit eleifend laoreet egestas turpis. Etiam at felis eu justo faucibus accumsan. Praesent rhoncus in magna non sagittis. Ut molestie ex erat, quis venenatis eros vestibulum non. Proin eu pulvinar metus, nec dapibus ex. Aenean purus nunc, vulputate sit amet ligula nec, posuere vestibulum tortor. Aliquam est neque, tempus elementum pellentesque ut, gravida blandit justo. Mauris velit elit, scelerisque ac lorem a, vulputate pulvinar risus. Ut scelerisque vel lectus vitae ornare.</p>
+      <fn id="fn1">
+        <p>Una nota de pie en sección Backgorund.</p>
+      </fn>
+    </sec>
+    <sec id="sec2">
+      <title>Methods</title>
+      <sec id="sec2_1">
+        <title>Study design</title>
+        <p><bold>Nullam hendrerit condimentum tellus eu sagittis.</bold><xref ref-type="fn" rid="fn2">Nota 2</xref> Suspendisse lacus felis, tincidunt eget feugiat non, tristique in augue. Cras pharetra quam sed sapien mattis volutpat. In placerat, orci a pharetra lacinia, dolor nunc pellentesque est, sed interdum mauris arcu quis purus. Curabitur convallis, sapien varius rutrum elementum, nunc ligula varius nisl, pulvinar lobortis leo sapien vitae turpis. <italic>Maecenas luctus</italic>, libero vestibulum rhoncus sodales, nunc nunc blandit massa, non finibus metus nulla vitae mauris  (<xref ref-type="bibr" rid="bib8">Hecker et al. 2015</xref>; <xref ref-type="bibr" rid="bib9">Huppert, Roth, y Foa 2003</xref>; <xref ref-type="bibr" rid="bib17">Stickgold 2002</xref>)⁠. Quisque non vehicula ex. Cras mollis sit amet ante eu euismod. Ut cursus commodo sapien quis ornare. Vestibulum varius, ipsum quis pretium semper, dolor urna sagittis mauris, in dictum tellus lorem sit amet ipsum. Proin et mauris a erat interdum aliquam. Duis non ante ac nisl malesuada pretium. Cras et dignissim ipsum, sed iaculis nisi. <italic>Donec ut tortor et metus</italic> porttitor pharetra euismod non urna. Cras pharetra metus purus, a interdum sapien consequat et. Duis vitae sodales nisi.</p>
+        <p><bold>Nunc sit amet eleifend mi.</bold> Praesent id iaculis risus. Aenean ac erat congue enim mattis mattis a vel est. Proin pulvinar non felis tristique efficitur. Aliquam venenatis eget nisi non scelerisque. Suspendisse vel lectus convallis velit congue rhoncus sagittis a sem. Mauris tincidunt molestie risus. Pellentesque accumsan egestas ex, sit amet fermentum lorem mollis sollicitudin. Vestibulum quis dapibus nisi. Proin pulvinar vitae arcu a malesuada. Suspendisse ultrices, dolor non efficitur semper, sem orci volutpat nibh, in fermentum ipsum tortor eget urna. Integer vel eros sed lorem consectetur pellentesque. Nullam ac massa vitae urna iaculis scelerisque at eu massa. Fusce dignissim ex id nibh pulvinar rutrum. Pellentesque quis vulputate quam.</p>
+        <p><bold>Sed sed accumsan lectus.</bold> Praesent sit amet enim id mi iaculis congue. Proin fermentum mollis pretium. Maecenas tempor leo ut faucibus convallis. Sed placerat fermentum consectetur. Nunc ante nulla, lobortis eget ex at, accumsan cursus tellus. Curabitur blandit, velit at semper aliquet, neque magna mollis elit, non tincidunt dui quam at magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi porttitor tincidunt urna, eu blandit risus gravida ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis orci varius, blandit felis ac, tempus nulla. Nulla semper auctor egestas. Curabitur sodales quam id imperdiet finibus.</p>
+        <fn id="fn2">
+          <p>Otra nota de pie en sección Study design.</p>
+        </fn>
+      </sec>
+      <sec id="sec2_2">
+        <title>Sample</title>
+        <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+        <list id="sec2_2-lst2_0" list-type="order">
+          <list-item>
+            <p>Ut scelerisque turpis nec lorem cursus, vestibulum venenatis felis convallis. </p>
+          </list-item>
+          <list-item>
+            <p>Vivamus metus tellus, cursus nec ex sollicitudin, volutpat lobortis nibh. </p>
+          </list-item>
+          <list-item>
+            <p>Maecenas consequat, quam a sodales porttitor, purus ipsum placerat mi, sed efficitur lectus risus eu nulla. </p>
+          </list-item>
+        </list>
+        <list id="sec2_2-lst3_0" list-type="bullet">
+          <list-item>
+            <list list-type="bullet">
+              <list-item>
+                <p>Phasellus egestas finibus tincidunt. Nullam euismod aliquam purus a egestas. </p>
+              </list-item>
+              <list-item>
+                <p>Nunc laoreet quam metus, vel faucibus turpis laoreet vitae. </p>
+              </list-item>
+              <list-item>
+                <p>Mauris eleifend ut sapien eu scelerisque. </p>
+              </list-item>
+              <list-item>
+                <p>Nulla imperdiet elit quis leo vehicula iaculis. </p>
+              </list-item>
+              <list-item>
+                <p>Curabitur a nunc auctor, semper ex a, ornare tortor. Suspendisse eu nisl eu ex egestas ultricies ut quis purus. </p>
+              </list-item>
+            </list>
+          </list-item>
+        </list>
+        <p>Suspendisse eu nisl eu ex egestas ultricies ut quis purus. Donec dignissim, nibh id fermentum eleifend, arcu mi pharetra nisl, in dignissim diam tellus at leo. Nam a erat ut nibh consequat pharetra in ultrices odio. Nulla viverra, libero eget efficitur efficitur, ante ligula imperdiet tortor, eu cursus augue quam sed augue.</p>
+      </sec>
+      <sec id="sec2_3">
+        <title>Measures</title>
+        <p>Donec iaculis at ligula ac cursus. Praesent eu odio sed neque sollicitudin efficitur. Aenean ac felis ut sem luctus imperdiet nec quis massa. Suspendisse aliquam risus et posuere iaculis. Aliquam quis euismod nisi. Nunc finibus lorem eu diam sagittis, et tincidunt nibh auctor. Praesent imperdiet nisi et ligula ornare bibendum. Sed aliquam, nulla eu venenatis placerat, sem dolor volutpat ante, sed tincidunt tortor ante venenatis turpis. Nam molestie euismod enim, vitae scelerisque neque aliquam quis. Ut ut ornare orci. Duis tempus est ut diam venenatis tristique. Fusce egestas consequat felis, a venenatis urna aliquet vel. Ut leo nisi, ullamcorper vitae purus vitae, commodo fermentum nisl. Morbi molestie vulputate justo, et scelerisque tellus bibendum et. Sed maximus eros lobortis augue vestibulum tristique.</p>
+      </sec>
+      <sec id="sec2_4">
+        <title>Statistical analysis</title>
+        <p>Fusce ut nibh orci. <bold>Phasellus libero urna</bold>, <bold><italic>suscipit non</italic></bold> leo eu, rhoncus finibus turpis. Aliquam ultricies, ipsum eget bibendum elementum, metus purus condimentum neque, vel pharetra sapien arcu nec diam. Donec vel tempor enim. Quisque fermentum massa ac augue porta, et ullamcorper risus vestibulum. Praesent efficitur massa mi, sed bibendum nulla aliquam ut. Phasellus in purus a augue mattis venenatis quis eu felis. Donec a leo vel arcu vestibulum consectetur. Duis a feugiat risus. Maecenas ornare augue eget lobortis gravida. Nullam lectus augue, venenatis sit amet nibh tristique, ullamcorper sollicitudin purus. Aliquam quis fermentum leo.</p>
+      </sec>
+      <sec id="sec2_5">
+        <title>Treatment algorithm</title>
+        <p>Nam sagittis scelerisque tortor, at pulvinar dui. Cras tellus mi, aliquet eget pellentesque id, feugiat sit amet ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed feugiat ligula vitae diam laoreet aliquet (See <xref>Error: no se encontró el origen de la referencia</xref>). Aenean tristique vulputate enim, quis interdum leo volutpat at. </p>
+        <fig id="fig1">
+          <label>Illustration 1</label>
+          <caption>
+            <title>Pellentesque ac ligula facilisis, eleifend magna sed, vehicula libero; donec lectus est, fermentum vel sapien in, mollis finibus purus.</title>
+          </caption>
+          <graphic mimetype="image" mime-subtype="png" xlink:href="image1.png"/>
+        </fig>
+        <p>Proin condimentum quam vel aliquam eleifend. Donec vehicula, leo sed feugiat euismod, mauris nunc pretium dui, ac dignissim dui neque eu augue. Pellentesque dolor sem, sollicitudin in orci eget, condimentum pharetra eros. Curabitur aliquam accumsan facilisis. Donec ullamcorper, eros at vehicula suscipit, nisi elit ultrices lectus, sit amet viverra eros metus eu mauris. Vestibulum quis consectetur enim. Aenean ornare nisi ut erat venenatis lobortis. Donec mollis placerat ipsum ut porttitor. Maecenas vitae faucibus tellus. Proin scelerisque mattis consectetur.</p>
+      </sec>
+    </sec>
+    <sec id="sec3">
+      <title>Results</title>
+      <sec id="sec3_1">
+        <title>Primary outcome</title>
+        <p>Quisque ante ante, varius nec tortor at, blandit fermentum sapien. Nam at placerat ante. Sed cursus erat eget dui finibus suscipit in <xref>Error: no se encontró el origen de la referencia</xref>. Duis at est facilisis, maximus diam ac, viverra nisl. Aenean tristique, leo id vestibulum lacinia, ligula massa congue felis, vel facilisis quam erat sed turpis. Quisque malesuada, lacus eu maximus ornare, enim lacus porttitor nunc, nec maximus dui dolor sit amet magna. Donec tincidunt dolor vulputate, ultrices arcu vel, tristique arcu. Cras aliquet euismod feugiat. Fusce auctor ac leo sed scelerisque. Fusce volutpat ipsum ac feugiat suscipit. Vestibulum elit sem, luctus quis neque at, fermentum porta dolor. Donec venenatis tempus tempus. Quisque faucibus, nisl eu blandit laoreet, mauris ex dictum nisl, at bibendum ex risus sed nulla. Nunc eget porta metus. Duis ut neque sed nisl dapibus aliquam. Cras molestie sed libero vitae lacinia.</p>
+        <table-wrap id="tbl1">
+          <label>Table 1</label>
+          <caption>
+            <title>Ynteger enim massa, tempor ut nulla ac, porttitor auctor justo phasellus lacinia vel massa ac tempus in id interdum arcu.</title>
+          </caption>
+          <table>
+            <tbody>
+              <tr>
+                <td align="left">
+                  <p>Measure</p>
+                </td>
+                <td align="left">
+                  <p>Control group</p>
+                </td>
+                <td align="left">
+                  <p>Active treatment</p>
+                </td>
+                <td align="left">
+                  <p>Total</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="center" colspan="4">
+                  <p>Males</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left">
+                  <p>N</p>
+                </td>
+                <td align="left">
+                  <p>33</p>
+                </td>
+                <td align="left">
+                  <p>32</p>
+                </td>
+                <td align="left">
+                  <p>65</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left">
+                  <p>% among groups</p>
+                </td>
+                <td align="left">
+                  <p>50.77%</p>
+                </td>
+                <td align="left">
+                  <p>49.23%</p>
+                </td>
+                <td align="left">
+                  <p>100%</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left">
+                  <p>% among general sample</p>
+                </td>
+                <td align="left">
+                  <p>61.11%</p>
+                </td>
+                <td align="left">
+                  <p>59.26%</p>
+                </td>
+                <td align="left">
+                  <p>60.19%</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="center" colspan="4">
+                  <p>Female</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left">
+                  <p>N</p>
+                </td>
+                <td align="left">
+                  <p>21</p>
+                </td>
+                <td align="left">
+                  <p>22</p>
+                </td>
+                <td align="left">
+                  <p>43</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left">
+                  <p>% among groups</p>
+                </td>
+                <td align="left">
+                  <p>48.84%</p>
+                </td>
+                <td align="left">
+                  <p>51.16%</p>
+                </td>
+                <td align="left">
+                  <p>100%</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left">
+                  <p>% among general sample</p>
+                </td>
+                <td align="left">
+                  <p>38.89%</p>
+                </td>
+                <td align="left">
+                  <p>40.74%</p>
+                </td>
+                <td align="left">
+                  <p>39.81%</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+        <p>Aliquam commodo, sapien a gravida viverra, neque arcu lacinia elit, at varius sem erat id massa. Praesent magna odio, dignissim vel sollicitudin non, posuere in velit. Aliquam dapibus neque tellus, et venenatis sem gravida ac. Etiam vel justo a tellus aliquam dapibus. Donec tristique at ligula vel condimentum. Sed eget arcu ac ex facilisis feugiat. Sed congue nisl et ultricies fringilla. Nunc eu dolor ac arcu cursus posuere.</p>
+      </sec>
+      <sec id="sec3_2">
+        <title>Secondary outcomes</title>
+        <sec id="sec3_2_1">
+          <title>Therapeutic criteria</title>
+          <p>Duis sollicitudin vitae velit at molestie. Sed nibh augue, accumsan ut arcu id, porttitor malesuada mauris. Curabitur vehicula eu dolor a blandit. Sed ut venenatis tortor. Donec tincidunt nibh vel nulla vulputate, nec iaculis velit vestibulum. </p>
+          <p>Fusce tempus laoreet dolor nec pretium. Sed lacinia ullamcorper fermentum:</p>
+          <list id="sec3_2_1-lst4_0" list-type="order">
+            <list-item>
+              <p>Maecenas in <bold>porta</bold> dolor, ut sodales nulla. </p>
+            </list-item>
+            <list-item>
+              <p>Aenean eget cursus est. </p>
+            </list-item>
+            <list-item>
+              <p>Nulla ac efficitur sapien, porta euismod metus. </p>
+            </list-item>
+            <list-item>
+              <p>Mauris fringilla <bold><italic>ut enim</italic></bold> vel tincidunt. </p>
+            </list-item>
+            <list-item>
+              <p>Duis nunc dolor, mattis vitae tincidunt sit amet, efficitur eu mauris. </p>
+            </list-item>
+            <list-item>
+              <p>Etiam at mauris vel ligula finibus commodo ut nec felis. </p>
+            </list-item>
+            <list-item>
+              <p><italic>Praesent</italic> iaculis nibh vel velit ultrices, tempor pulvinar odio ultrices. Aenean metus nibh, convallis nec ultricies vel, elementum ut eros.</p>
+            </list-item>
+          </list>
+          <p>Aliquam pharetra aliquet nisi et cursus. Praesent vehicula risus eu dolor pretium blandit. Praesent pretium molestie tempor. Etiam porttitor, eros sagittis lobortis convallis, justo turpis porttitor erat, eget malesuada magna erat congue lectus.</p>
+        </sec>
+        <sec id="sec3_2_2">
+          <title>Symptoms intensity</title>
+          <p>Aenean et condimentum augue. Ut placerat velit sem, vel dapibus purus ullamcorper sollicitudin. Donec vel semper odio. Cras metus justo, feugiat eget pellentesque id, porta eu augue. Cras tempor maximus est, gravida volutpat elit rutrum quis. Pellentesque nec rutrum metus. Donec lacinia efficitur mauris placerat tempus. Phasellus in magna nec massa tincidunt condimentum in ut mi. Nam neque ex, tempus non odio eu, mollis lobortis nibh. Integer ex orci, consectetur in molestie eget, vulputate eget ligula. Praesent faucibus ut tortor sodales facilisis. Pellentesque a risus augue. In pretium commodo nisl, in hendrerit neque. Aliquam viverra tincidunt tempus (see <xref>Error: no se encontró el origen de la referencia</xref>).</p>
+          <table-wrap id="tbl2">
+            <label>Table 2</label>
+            <caption>
+              <title>Aenean ut purus aliquet, bibendum orci et, gravida odio.</title>
+            </caption>
+            <table>
+              <tbody>
+                <tr>
+                  <td align="left">
+                    <p>Measure</p>
+                  </td>
+                  <td align="left">
+                    <p>N</p>
+                  </td>
+                  <td align="left">
+                    <p>Mean</p>
+                  </td>
+                  <td align="left">
+                    <p>SD</p>
+                  </td>
+                  <td align="left">
+                    <p>95% CI</p>
+                  </td>
+                  <td align="left">
+                    <p>Max</p>
+                  </td>
+                  <td align="left">
+                    <p>Min</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <p>Criterion B</p>
+                  </td>
+                  <td align="center" rowspan="5">
+                    <p>108</p>
+                  </td>
+                  <td align="left">
+                    <p>12.00</p>
+                  </td>
+                  <td align="left">
+                    <p>2.41</p>
+                  </td>
+                  <td align="left">
+                    <p>11.54-12.46</p>
+                  </td>
+                  <td align="left">
+                    <p>5</p>
+                  </td>
+                  <td align="left">
+                    <p>19</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <p>Criterion C</p>
+                  </td>
+                  <td align="left">
+                    <p>5.37</p>
+                  </td>
+                  <td align="left">
+                    <p>1.13</p>
+                  </td>
+                  <td align="left">
+                    <p>5.16-5.58</p>
+                  </td>
+                  <td align="left">
+                    <p>3</p>
+                  </td>
+                  <td align="left">
+                    <p>8</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <p>Criterion D</p>
+                  </td>
+                  <td align="left">
+                    <p>16.48</p>
+                  </td>
+                  <td align="left">
+                    <p>3.33</p>
+                  </td>
+                  <td align="left">
+                    <p>15.85-17.12</p>
+                  </td>
+                  <td align="left">
+                    <p>10</p>
+                  </td>
+                  <td align="left">
+                    <p>23</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <p>Criterion E</p>
+                  </td>
+                  <td align="left">
+                    <p>13.09</p>
+                  </td>
+                  <td align="left">
+                    <p>3.07</p>
+                  </td>
+                  <td align="left">
+                    <p>12.51-13.68</p>
+                  </td>
+                  <td align="left">
+                    <p>6</p>
+                  </td>
+                  <td align="left">
+                    <p>20</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <p>Total (B+C+D+E)</p>
+                  </td>
+                  <td align="left">
+                    <p>46.93</p>
+                  </td>
+                  <td align="left">
+                    <p>8.44</p>
+                  </td>
+                  <td align="left">
+                    <p>45.32-48.54</p>
+                  </td>
+                  <td align="left">
+                    <p>26</p>
+                  </td>
+                  <td align="left">
+                    <p>68</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </table-wrap>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec4">
+      <title>Discussion</title>
+      <p>Duis ut cursus ligula, sit amet ultrices augue (<xref ref-type="bibr" rid="bib6">Freeman et al. 2014</xref>; <xref ref-type="bibr" rid="bib9">Huppert, Roth, y Foa 2003</xref>; <xref ref-type="bibr" rid="bib10">Maher et al. 2010</xref>). Praesent commodo orci a placerat convallis. Curabitur interdum purus metus, sit amet porta ligula pretium sed. Mauris non lectus est (<xref ref-type="bibr" rid="bib3">Foa, Gillihan, y Bryant 2013</xref>; M. Franklin, Foa, y March 2003; <xref ref-type="bibr" rid="bib10">Maher et al. 2010</xref>). Nunc sodales euismod placerat. Donec viverra, ipsum a tempus suscipit, velit ante fermentum nibh, ac tincidunt lorem lorem sed orci. Etiam risus libero, interdum ut ante nec, bibendum placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In sed vehicula ante. Pellentesque vehicula tristique nisi, quis commodo erat rhoncus sed. Quisque porta pellentesque lacus, eu bibendum lorem mattis at. Aenean ut purus aliquet, bibendum orci et, gravida odio.</p>
+      <p>Quisque rutrum tortor vitae ante fermentum interdum. Vivamus sollicitudin sodales turpis, a fermentum felis ullamcorper non (M. E. Franklin et al. 2011; <xref ref-type="bibr" rid="bib6">Freeman et al. 2014</xref>). Duis nec justo sit amet ligula malesuada imperdiet. Cras id ex vulputate, ornare felis vel, fringilla elit. Vivamus dignissim metus eget magna porttitor tincidunt. Sed dignissim nunc sit amet hendrerit tristique. Nullam ante nisl, porta egestas nisl in, egestas consequat ligula. Cras tristique elementum tellus, non vehicula risus congue at (Acarturk et al. 2015; <xref ref-type="bibr" rid="bib12">Nijdam et al. 2012</xref>; <xref ref-type="bibr" rid="bib13">Rothbaum, Astin, y Marsteller 2005</xref>; <xref ref-type="bibr" rid="bib17">Stickgold 2002</xref>). Nulla gravida dolor libero, eget cursus magna consequat quis. Etiam gravida nisi leo, eu aliquet risus hendrerit eu.</p>
+      <p>Pellentesque aliquet, nisl in venenatis maximus, quam lacus pulvinar elit, ac tincidunt nisl tortor non nisi. Aenean eget rhoncus tellus, eu euismod urna. Suspendisse et feugiat risus, sed pretium tortor (8,19–24). Vestibulum ac magna in mauris pretium tincidunt. Suspendisse velit dolor, sollicitudin tristique justo eu, luctus rutrum leo. Proin porta lacus sed massa molestie, et tincidunt nunc euismod. Ut id porta massa, eget laoreet leo.</p>
+    </sec>
+    <sec id="sec5">
+      <title>Conclusion</title>
+      <p>Cras vitae urna turpis. Nam vel velit placerat, luctus sapien non, ornare odio. Integer bibendum imperdiet tellus sed tincidunt. Sed volutpat id urna in malesuada. Etiam ultricies sapien elit, non finibus odio efficitur at. Aenean non elit a nulla sollicitudin auctor. Suspendisse vitae mi pellentesque, pellentesque erat in, facilisis velit. Duis commodo commodo tristique. Nam eu tincidunt tortor. Maecenas id gravida est, eget lacinia nisl. Aliquam purus arcu, rutrum nec feugiat a, malesuada non leo. Nulla sollicitudin, enim at rhoncus commodo, orci libero luctus purus, id viverra lacus nisl non nibh. </p>
+    </sec>
+  </body>
+  <back>
+
+    <ref-list>
+      <ref id="bib1">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cloitre</surname>
+              <given-names>Marylène</given-names>
+            </name>
+          </person-group>
+          <article-title>Evidence for proposed ICD-11 PTSD and complex PTSD: A latent profile analysis»</article-title>
+          <source>European Journal of Psychotraumatology</source>
+          <year>2013</year>
+        </element-citation>
+      </ref>
+      <ref id="bib2">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Ehlers</surname>
+              <given-names>Anke</given-names>
+            </name>
+            <name>
+              <surname>Clark</surname>
+              <given-names>David M.</given-names>
+            </name>
+          </person-group>
+          <article-title>A cognitive model of posttraumatic stress disorder»</article-title>
+          <source>Behaviour Research and Therapy</source>
+          <year>2000</year>
+        </element-citation>
+      </ref>
+      <ref id="bib3">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Foa</surname>
+              <given-names>Edna B.</given-names>
+            </name>
+            <name>
+              <surname>Gillihan</surname>
+              <given-names>Seth J.</given-names>
+            </name>
+            <name>
+              <surname>Bryant</surname>
+              <given-names>Richard A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Challenges and Successes in Dissemination of Evidence-Based Treatments for Posttraumatic Stress»</article-title>
+          <source>Psychological Science in the Public Interest</source>
+          <year>2013</year>
+        </element-citation>
+      </ref>
+      <ref id="bib4">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Franklin</surname>
+              <given-names>Martin E.</given-names>
+            </name>
+          </person-group>
+          <article-title>Cognitive Behavior Therapy Augmentation of Pharmacotherapy in Pediatric Obsessive-Compulsive Disorder»</article-title>
+          <source>JAMA</source>
+          <year>2011</year>
+        </element-citation>
+      </ref>
+      <ref id="bib5">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Franklin</surname>
+              <given-names>Martin</given-names>
+            </name>
+            <name>
+              <surname>Foa</surname>
+              <given-names>Edna</given-names>
+            </name>
+            <name>
+              <surname>March</surname>
+              <given-names>John S.</given-names>
+            </name>
+          </person-group>
+          <article-title>The pediatric obsessive-compulsive disorder treatment study: Rationale, design, and methods»</article-title>
+          <source>Journal of Child and Adolescent Psychopharmacology</source>
+          <year>2003</year>
+        </element-citation>
+      </ref>
+      <ref id="bib6">
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Freeman</surname>
+              <given-names>Jennifer</given-names>
+            </name>
+          </person-group>
+          <source>Family-based treatment of early childhood obsessive-compulsive disorder: The pediatric obsessive-compulsive disorder treatment study for young children (POTS Jr) -A randomized clinical trial»</source>
+          <publisher-name>JAMA Psychiatry</publisher-name>
+          <year>2014</year>
+        </element-citation>
+      </ref>
+      <ref id="bib7">
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>George</surname>
+              <given-names>Jennifer M.</given-names>
+            </name>
+          </person-group>
+          <source>Emotions and leadership: The role of emotional intelligence»</source>
+          <publisher-name>Human Relations</publisher-name>
+          <year>2000</year>
+        </element-citation>
+      </ref>
+      <ref id="bib8">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hecker</surname>
+              <given-names>Tobias</given-names>
+            </name>
+            <name>
+              <surname>Hermenau</surname>
+              <given-names>Katharin</given-names>
+            </name>
+            <name>
+              <surname>Crombach</surname>
+              <given-names>Anselm</given-names>
+            </name>
+            <name>
+              <surname>Elbert</surname>
+              <given-names>Thomas</given-names>
+            </name>
+          </person-group>
+          <article-title>Treating traumatized offenders and veterans by means of narrative exposure therapy»</article-title>
+          <source>Frontiers in Psychiatry</source>
+          <year>2015</year>
+        </element-citation>
+      </ref>
+      <ref id="bib9">
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Huppert</surname>
+              <given-names>Jonathan D.</given-names>
+            </name>
+            <name>
+              <surname>Roth</surname>
+              <given-names>Deborah A.</given-names>
+            </name>
+            <name>
+              <surname>Foa</surname>
+              <given-names>Edna B.</given-names>
+            </name>
+          </person-group>
+          <source>Cognitive-behavioral treatment of social phobia: New advances»</source>
+          <publisher-name>Current Psychiatry Reports</publisher-name>
+          <year>2003</year>
+        </element-citation>
+      </ref>
+      <ref id="bib10">
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Maher</surname>
+              <given-names>M.J.</given-names>
+            </name>
+          </person-group>
+          <source>Moderators and predictors of response to cognitive-behavioral therapy augmentation of pharmacotherapy in obsessive-compulsive disorder»</source>
+          <publisher-name>Psychological Medicine</publisher-name>
+          <year>2010</year>
+        </element-citation>
+      </ref>
+      <ref id="bib11">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Nemeroff</surname>
+              <given-names>Charles B.</given-names>
+            </name>
+          </person-group>
+          <article-title>Posttraumatic stress disorder: A state-of-the-science review»</article-title>
+          <source>Journal of Psychiatric Research</source>
+          <year>2006</year>
+        </element-citation>
+      </ref>
+      <ref id="bib12">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Nijdam</surname>
+              <given-names>Mirjam J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Brief eclectic psychotherapy v. eye movement desensitisation and reprocessing therapy for post-traumatic stress disorder: Randomised controlled trial»</article-title>
+          <source>British Journal of Psychiatry</source>
+          <year>2012</year>
+        </element-citation>
+      </ref>
+      <ref id="bib13">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Rothbaum</surname>
+              <given-names>Barbara Olasov</given-names>
+            </name>
+            <name>
+              <surname>Astin</surname>
+              <given-names>Millie C.</given-names>
+            </name>
+            <name>
+              <surname>Marsteller</surname>
+              <given-names>Fred</given-names>
+            </name>
+          </person-group>
+          <article-title>Prolonged exposure versus Eye Movement Desensitization and Reprocessing (EMDR) for PTSD rape victims»</article-title>
+          <source>Journal of Traumatic Stress</source>
+          <year>2005</year>
+        </element-citation>
+      </ref>
+      <ref id="bib14">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Sareen</surname>
+              <given-names>Jitender</given-names>
+            </name>
+          </person-group>
+          <article-title>Posttraumatic stress disorder in adults: Impact, comorbidity, risk factors, and treatment»</article-title>
+          <source>Canadian Journal of Psychiatry</source>
+          <year>2014</year>
+        </element-citation>
+      </ref>
+      <ref id="bib15">
+        <element-citation publication-type="chapter">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Shin</surname>
+              <given-names>Lisa M.</given-names>
+            </name>
+            <name>
+              <surname>Rauch</surname>
+              <given-names>Scott L.</given-names>
+            </name>
+            <name>
+              <surname>Pitman</surname>
+              <given-names>Roger K.</given-names>
+            </name>
+          </person-group>
+          <chapter-title>Amygdala, medial prefrontal cortex, and hippocampal function in PTSD»</chapter-title>
+          <source>En Annals of the New York Academy of Sciences</source>
+          <year>2006</year>
+        </element-citation>
+      </ref>
+      <ref id="bib16">
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Smith-Lovin</surname>
+              <given-names>Lynn</given-names>
+            </name>
+            <name>
+              <surname>Lewis</surname>
+              <given-names>Michael</given-names>
+            </name>
+            <name>
+              <surname>Haviland</surname>
+              <given-names>Jeanette M.</given-names>
+            </name>
+          </person-group>
+          <source>Handbook of Emotions</source>
+          <publisher-name>Contemporary Sociology</publisher-name>
+          <year>1995</year>
+        </element-citation>
+      </ref>
+      <ref id="bib17">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Stickgold</surname>
+              <given-names>R.</given-names>
+            </name>
+          </person-group>
+          <article-title>EMDR: A putative neurobiological mechanism of action»</article-title>
+          <source>Journal of Clinical Psychology</source>
+          <year>2002</year>
+        </element-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

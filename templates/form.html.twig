@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="command" class="card shadow-sm">
+        <div class="card-header bg-primary text-light">
+            <h2 class="card-title">📄 {{title}}</h2>
+            {% if description is defined and description is not empty %}
+            <p>{{description}}</p>
+            {% endif %}
+        </div>
+        <div class="card-body p-4">
+            {# Mostrar errores generales del formulario #}
+            {% if form.vars.errors|length > 0 %}
+                <div class="alert alert-danger in" role="alert">
+                    <h5 class="mb-2">{{'⚠️ Error'|trans}}</h5>
+                    <ul class="mb-0">
+                        {% for error in form.vars.errors %}
+                            <li>{{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {# Evita usar form_widget(form), que incluye errores globales #}
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                {#{ form_widget(form) }#}
+                {{ form_rest(form) }}
+                <div class="text-end">
+                    <a href="{{ app.request.uri }}" class="btn btn-secondary">🧹 {{'Clean'|trans}}</a>
+                    <button class="btn btn-primary" type="submit">💾 {{'Convert'|trans}}</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </section>
+
+    {% if output is defined and output is not empty %}
+        <h2 class="mt-5">Result:</h2>
+        <pre class="bg-dark text-white p-3 rounded">{{ output }}</pre>
+    {% endif %}
+{% endblock %}

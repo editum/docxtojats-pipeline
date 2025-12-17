@@ -1,0 +1,28 @@
+# 🇩🇪 DE — Deutsch
+keywords:
+  # Wird verwendet, um Literaturverzeichnisabschnitte anhand des Titels zu erkennen
+  bibliography:
+    - Literaturverzeichnis
+    - Bibliografie
+    - Quellenangaben
+    - Zitierte Literatur
+    - Quellen
+    # Manchmal vor dem Literaturverzeichnis
+    - Schlussfolgerung
+    - Schlussfolgerungen
+    - Fazit
+    # In Büchern oder Kapiteln
+    - Anmerkungen und Literatur
+    # Geisteswissenschaften / populärwissenschaftlich
+    - Empfohlene Lektüre
+
+  # Wird verwendet, um Figurüberschriften zu erkennen
+  figure:
+    - Grafik
+    - Abbildung
+    - Bild
+    - Illustration
+
+  # Wird verwendet, um Tabellenüberschriften zu erkennen
+  table:
+    - Tabelle

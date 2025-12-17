@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>FET の特性</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../theme.css">
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <body>
+    <section class="level1" aria-labelledby="fet-の特性">
+      <h1 id="fet-の特性">FET の特性</h1>
+      <div class="author">
+        <ul>
+          <li>2020/08/10</li>
+          <li>びぶりお　ゆたか</li>
+        </ul>
+      </div>
+      <section class="level2" aria-labelledby="目的">
+        <h2 id="目的">目的</h2>
+        <p>FET の特性を調査するとともに、FET を用いた回路の作製に習熟することを目的とする。</p>
+      </section>
+      <section class="level2" aria-labelledby="原理">
+        <h2 id="原理">原理</h2>
+        <section class="level3" aria-labelledby="半導体">
+          <h3 id="半導体">半導体</h3>
+          <p>物質は、電流が流れる<strong>導体</strong>と電流が流れない<strong>絶縁体</strong>、ある条件によって電流が流れる<strong>半導体</strong>に分類できる。これらはバンドギャップの幅の違いで区別でき、バンドギャップが大きいと電子が移動できず電流が流れない。半導体は絶縁体に比べてバンドギャップが小さく、半導体に不純物を混ぜることで電子や空孔の流れを制御できる。</p>
+          <p>半導体にはシリコンやゲルマニウムがよく使われるが、それらの結晶の性質は絶縁体に近く、電圧をかけても電気はほとんど流れない。しかしそこに電子を余計にもったリンなどの不純物をほんの少し加えるだけで、導体のような性質に変化する。この電子を余計にもった不純物が含まれる半導体を n (negative) 型半導体、逆に電子の少ないホウ素などの不純物が入った半導体を p (positive) 型半導体と呼ぶ。p 型半導体では、正孔と呼ばれる電子が足りない穴が電子の代わりの働きをし、＋の電子が動き回るように振舞う。この n 型と p 型を接合させることにより、電界の向きによって電流が流れたり流れなかったりする<strong>整流作用</strong>が現れる。</p>
+        </section>
+        <section class="level3" aria-labelledby="電界効果トランジスタの動作原理">
+          <h3 id="電界効果トランジスタの動作原理">電界効果トランジスタの動作原理</h3>
+          <p>p 型半導体と n 型半導体を接合することを pn 接合という。pn 接合すると、p 型半導体と n 型半導体の境界部分で電子と正孔が結合し、境界部分の n 側に＋、p 側に − の電気を帯びた領域ができる。この 2 つの領域は<strong>空乏層</strong>と呼ばれ、電流が流れない領域である。しかし、 p 側から n 側に電圧をかけると、空乏層で結合できなかった電子と正孔が接近し、一時的に空乏層が小さくなる。空乏層の厚さが十分に小さくなった時、電子と正孔がそれぞれ空乏層を越えられるようになるため、拡散電流が流れる。この p 側から n 側に電流が流れる方向を順方向という。逆方向に電圧をかけると空乏層は大きくなり、拡散電流は流れない。このように、pn 接合によって整流を行う素子をダイオードと呼ぶ。</p>
+          <p>FET には 3 本の端子が出ており、それぞれゲート (G)、ドレイン (D)、ソース (S) と名前がついている。FET は n 型半導体と p 型半導体の組み合わせでできており、チャネルの物質的性質によって n チャネル型 FET と p チャネル型 FET に分類できる。n チャネル型 FET はドレインとソースの電極周辺が n 型半導体で、その間が p 型半導体である。p チャネル型 FET はドレインとソースの電極周辺が p 型半導体で、その間が n 型半導体である。<a href="#n_fet" data-ref="fig"></a> に n チャネル型 FET、<a href="#p_fet" data-ref="fig"></a> に p チャネル型 FET の構造を簡略化して示した。</p><!--
+            【図表の参照】 https://github.com/vivliostyle/vfm/issues/11
+              [@fig:id] や {#fig:id} のような記法は未実装のため、以下で代用
+              - 参照元: <a href="#id" data-ref="fig"></a>
+              - 参照先: <span id="id"></span>
+          --><!-- 図 -->
+          <figure>
+            <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808190103.png" alt="n チャネル型 FET" id="n_fet">
+            <figcaption aria-hidden="true">n チャネル型 FET</figcaption>
+          </figure><!-- ここまで図 --><!-- 図 -->
+          <figure>
+            <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808190107.png" alt="p チャネル型 FET" id="p_fet">
+            <figcaption aria-hidden="true">p チャネル型 FET</figcaption>
+          </figure><!-- ここまで図 -->
+        </section>
+      </section>
+      <section class="level2" aria-labelledby="実験方法">
+        <h2 id="実験方法">実験方法</h2>
+        <section class="level3" aria-labelledby="静特性実験">
+          <h3 id="静特性実験">静特性実験</h3>
+          <p><a href="#circuit_static" data-ref="fig"></a>に示す回路を作製した。</p><!-- 図 -->
+          <figure>
+            <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808194807.png" alt="静特性実験の回路" id="circuit_static">
+            <figcaption aria-hidden="true">静特性実験の回路</figcaption>
+          </figure><!-- ここまで図 -->
+          <section class="level4" aria-labelledby="-特性">
+            <h4 id="-特性"><span class="math inline" data-math-typeset="true">\(V_{GS} - I_{D}\)</span> 特性</h4>
+            <p><span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> を 0 V から 4.5 V まで変化させたときの <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の値を測定した。 <span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> が 3 V、10 V の場合のそれぞれについて行った。</p>
+          </section>
+          <section class="level4" aria-labelledby="-特性-1">
+            <h4 id="-特性-1"><span class="math inline" data-math-typeset="true">\(V_{DS} - I_{D}\)</span> 特性</h4>
+            <p><span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> を 0 V から 18 V まで変化させたときの <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の値を測定した。 <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> が 0.2 V、0.4 V、0.6 V、0.8 V の場合のそれぞれについて行った。</p>
+          </section>
+        </section>
+        <section class="level3" aria-labelledby="動特性実験">
+          <h3 id="動特性実験">動特性実験</h3>
+          <p><a href="#circuit_dynamic" data-ref="fig"></a>に示す回路を作製した。</p><!-- 図 -->
+          <figure>
+            <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808205247.png" alt="動特性実験の回路" id="circuit_dynamic">
+            <figcaption aria-hidden="true">動特性実験の回路</figcaption>
+          </figure><!-- ここまで図 -->
+          <section class="level4" aria-labelledby="30-v-を印加したときのゲート電圧-">
+            <h4 id="30-v-を印加したときのゲート電圧-">30 V を印加したときのゲート電圧 <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span></h4>
+            <p>回路に入力電圧として 30 V 加えた時のソースに対するゲートの電圧 <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> を調べた。</p>
+          </section>
+          <section class="level4" aria-labelledby="入力信号--に対する出力--の変化">
+            <h4 id="入力信号--に対する出力--の変化">入力信号 <span class="math inline" data-math-typeset="true">\(f\)</span> に対する出力 <span class="math inline" data-math-typeset="true">\(v_{D}\)</span> の変化</h4>
+            <p>入力端子に <span class="math inline" data-math-typeset="true">\(f =\)</span> 1 kHz の微小な正弦波を入力し、 <span class="math inline" data-math-typeset="true">\(v_{D}\)</span>（出力）が <span class="math inline" data-math-typeset="true">\(v_{G}\)</span>（入力）に対しどのような変化をするか調べた。ただし、 <span class="math inline" data-math-typeset="true">\(v_{G}\)</span> は 50 mV から 3000 mV まで変化させた。</p>
+            <p>また、出力波形が歪みだす時の <span class="math inline" data-math-typeset="true">\(v_{G}\)</span> を調べた。</p>
+          </section>
+          <section class="level4" aria-labelledby="電圧増幅率--の周波数特性">
+            <h4 id="電圧増幅率--の周波数特性">電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> の周波数特性</h4>
+            <p>入力電圧を 1 V とし、周波数 <span class="math inline" data-math-typeset="true">\(f\)</span> を 0.004 kHz から 3000 kHz まで変化させ、電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> の周波数特性を調べた。静特性・動特性の実験で使用した器具の一覧を <a href="#instruments" data-ref="table"></a>に示す。</p><!--
+              【表のキャプション】
+                記法が未実装のため、HTMLで書いている
+                表の記法は使用できる
+                表内の別のVFM記法は未対応
+                https://github.com/vivliostyle/vfm/issues/35
+            -->
+            <table id="instruments">
+              <caption>実験器具</caption>
+              <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>製造会社</th>
+                  <th>型番</th>
+                  <th>製造番号</th>
+                  <th>規格</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>FET</td>
+                  <td>-</td>
+                  <td>K30AGR5D</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>コンデンサ</td>
+                  <td>-</td>
+                  <td>85P4, 7414</td>
+                  <td>-</td>
+                  <td>16V, l6 $\mu$ F</td>
+                </tr>
+                <tr>
+                  <td>直流電源</td>
+                  <td>METRONIX</td>
+                  <td>543A</td>
+                  <td>176541</td>
+                  <td>40V, 0.5A</td>
+                </tr>
+                <tr>
+                  <td>デイジタルマルチメ一タ</td>
+                  <td>TEXIO</td>
+                  <td>DL-2040</td>
+                  <td>13010369</td>
+                  <td>16VA, 50/60Hz</td>
+                </tr>
+                <tr>
+                  <td>オシロスコ一プ</td>
+                  <td>EZ</td>
+                  <td>OS-5020</td>
+                  <td>8075246</td>
+                  <td>20MHz</td>
+                </tr>
+                <tr>
+                  <td>フアンクションジエネレ一タ</td>
+                  <td>IWATSU</td>
+                  <td>SG-4105</td>
+                  <td>3227463</td>
+                  <td>15MHz</td>
+                </tr>
+                <tr>
+                  <td>発振器</td>
+                  <td>KENWOOD</td>
+                  <td>AG-204D</td>
+                  <td>11070316</td>
+                  <td>50/6O[Hz], 10.8[W]</td>
+                </tr>
+                <tr>
+                  <td>テスタ</td>
+                  <td>YOKOGAWA</td>
+                  <td>732-01</td>
+                  <td>9861132</td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+      </section>
+      <section class="level2" aria-labelledby="実験結果">
+        <h2 id="実験結果">実験結果</h2>
+        <section class="level3" aria-labelledby="静特性実験-1">
+          <h3 id="静特性実験-1">静特性実験</h3>
+          <section class="level4">
+            <h4 id=""><span class="math inline" data-math-typeset="true">\(V_{GS} - I_{D}\)</span></h4>
+            <p>実験結果を <a href="#vgs_id" data-ref="fig"></a>に示す。 <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> が 2 V 以下で <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> は <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> が大きくなるにつれて減少し、 <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> が 2 V 以上では <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> はほぼ 0 A となった。また、 <span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> の値が大きいほど <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の値は大きくなった。</p>
+          </section>
+          <section class="level4" aria-labelledby="-特性-2">
+            <h4 id="-特性-2"><span class="math inline" data-math-typeset="true">\(V_{DS} - I_{D}\)</span> 特性</h4>
+            <p>実験結果を <a href="#vds_id" data-ref="fig"></a>に示す。 <span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> が 0 V から 2 V までの範囲で <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の値は急激に増加し、2 V 以降は増加減少を繰り返しながら全体的に増加した。 <span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> の値が大きいほど <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の値は小さくなった。</p>
+          </section>
+        </section>
+        <section class="level3" aria-labelledby="動特性実験-1">
+          <h3 id="動特性実験-1">動特性実験</h3>
+          <section class="level4" aria-labelledby="30v-を印加した時のゲート電圧-">
+            <h4 id="30v-を印加した時のゲート電圧-">30V を印加した時のゲート電圧 <span class="math inline" data-math-typeset="true">\(V_{GS}\)</span></h4>
+            <p><span class="math inline" data-math-typeset="true">\(V_{GS}\)</span> の値は 1.42 V であった。</p>
+          </section>
+          <section class="level4" aria-labelledby="入力信号--に対する出力--の変化-1">
+            <h4 id="入力信号--に対する出力--の変化-1">入力信号 <span class="math inline" data-math-typeset="true">\(f\)</span> に対する出力 <span class="math inline" data-math-typeset="true">\(V_{D}\)</span> の変化</h4>
+            <p>実験結果を <a href="#f_vd" data-ref="fig"></a>に示す。 <span class="math inline" data-math-typeset="true">\(v_{G}\)</span> が 50 mV から 300 mV までの範囲で <span class="math inline" data-math-typeset="true">\(v_{D}\)</span> は <span class="math inline" data-math-typeset="true">\(v_{G}\)</span> にほぼ比例していた。 <span class="math inline" data-math-typeset="true">\(v_{G}\)</span> が 1000 mV を超えると出力波形の傾きは負になった。また、 <span class="math inline" data-math-typeset="true">\(v_{G}\)</span> が 400 mV に なると <span class="math inline" data-math-typeset="true">\(v_{G} - v_{D}\)</span> 曲線の傾きは次第に小さくなり、出力波形が歪みだした。</p>
+          </section>
+          <section class="level4" aria-labelledby="電圧増幅率--の周波数特性-1">
+            <h4 id="電圧増幅率--の周波数特性-1">電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> の周波数特性</h4>
+            <p>実験結果を <a href="#f_mu" data-ref="fig"></a>に示す。周波数 <span class="math inline" data-math-typeset="true">\(f\)</span> が 10 Hz 以上 50 kHz 以下の時に電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> は一定 (17〜18 V)となった。周波数 <span class="math inline" data-math-typeset="true">\(f\)</span> が 10 Hz 以下及び 50 kHz 以上の時に電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> は低下した。</p><!-- 図 -->
+            <figure>
+              <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808211415.png" alt="$V_{DS}$ を固定した時の $V_{GS}$ に対する $I_{D}$ の変化" id="vgs_id">
+              <figcaption aria-hidden="true">$V_{DS}$ を固定した時の $V_{GS}$ に対する $I_{D}$ の変化</figcaption>
+            </figure><!-- ここまで図 --><!-- 図 -->
+            <figure>
+              <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808211420.png" alt="$V_{GS}$ を固定した時の $V_{DS}$ に対する $I_{D}$ の変化" id="vds_id">
+              <figcaption aria-hidden="true">$V_{GS}$ を固定した時の $V_{DS}$ に対する $I_{D}$ の変化</figcaption>
+            </figure><!-- ここまで図 --><!-- 図 -->
+            <figure>
+              <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808211425.png" alt="入力信号 $f =$ 1 kHz に対する出力 $v_{D}$ の変化" id="f_vd">
+              <figcaption aria-hidden="true">入力信号 $f =$ 1 kHz に対する出力 $v_{D}$ の変化</figcaption>
+            </figure><!-- ここまで図 --><!-- 図 -->
+            <figure>
+              <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808211430.png" alt="電圧増幅率 $\mu$ の周波数特性" id="f_mu">
+              <figcaption aria-hidden="true">電圧増幅率 $\mu$ の周波数特性</figcaption>
+            </figure><!-- ここまで図 -->
+          </section>
+        </section>
+      </section>
+      <section class="level2" aria-labelledby="考察">
+        <h2 id="考察">考察</h2>
+        <section class="level3" aria-labelledby="電圧増幅率--の計算">
+          <h3 id="電圧増幅率--の計算">電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> の計算</h3>
+          <p><a href="#vgs_id" data-ref="fig"></a>の <span class="math inline" data-math-typeset="true">\(V_{GS} - I_{D}\)</span> 特性（<span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> = 3 V）のグラフを 0 V <span class="math inline" data-math-typeset="true">\(\leq V_{GS} \leq\)</span> 2.5 V の範囲で抜き出し、二次式</p>
+          <p><span class="math display" data-math-typeset="true">$$
+I_{D} = {0.549 (V_{GS} + 0.649)^2 - 3.389 (V_{GS} + 0.381) + 4.297 } \times 10^{-3}
+$$</span></p>
+          <p>で近似したものを <a href="#vgs" data-ref="fig"></a>に示す。 <span class="math inline" data-math-typeset="true">\(V_{GS} =\)</span> 1.42 V での傾きは、</p>
+          <p><span class="math display" data-math-typeset="true">$$
+I_{D}^{'} (1.098 V_{GS} - 2.676) \times 10^{-3}
+$$</span></p>
+          <p>より</p>
+          <p><span class="math display" data-math-typeset="true">$$
+I_{D}^{'} (1.42) = -1.117 [\mathrm{mS}]
+$$</span></p>
+          <p>と求められる。これを相互コンダクタンス <span class="math inline" data-math-typeset="true">\(g_m\)</span> とする。</p>
+          <p>次に <a href="#vds_id" data-ref="fig"></a>の <span class="math inline" data-math-typeset="true">\(V_{DS} - I_{D}\)</span> 特性（<span class="math inline" data-math-typeset="true">\(V_{DS} =\)</span> 0.8 V）のグラフにおいて、傾きが小さい 6.0 <span class="math inline" data-math-typeset="true">\(\leq V_{DS} \leq\)</span> 8.0 V の範囲で傾きを求める。</p>
+          <p><span class="math display" data-math-typeset="true">$$
+\frac{0.70 - 0.69}{8.0 - 6.0} \times 10^{-3} = 5.0 \times 10^{-6}
+$$</span></p>
+          <p>逆数をとり、</p>
+          <p><span class="math display" data-math-typeset="true">$$
+\frac{1}{5.0 \times 10^{-6}} = 2.0 \times 10^{5} [Ω]
+$$</span></p>
+          <p>これをドレイン抵抗 <span class="math inline" data-math-typeset="true">\(r_d\)</span> とする。</p>
+          <p>相互コンダクタンス <span class="math inline" data-math-typeset="true">\(g_m\)</span> とドレイン抵抗 <span class="math inline" data-math-typeset="true">\(r_d\)</span> から電圧増幅率 <span class="math inline" data-math-typeset="true">\(\mu\)</span> を求めると、</p>
+          <p><span class="math display" data-math-typeset="true">$$
+\mu = g_m \times r_d = -2.234 \times 10^2
+$$</span></p>
+          <p>となる。</p>
+        </section>
+        <section class="level3" aria-labelledby="出力が歪みだす原因">
+          <h3 id="出力が歪みだす原因">出力が歪みだす原因</h3>
+          <p><a href="#vds_id" data-ref="fig"></a>から分かるように、ドレイン - ソース間電圧 <span class="math inline" data-math-typeset="true">\(V_{DS}\)</span> が 1 V より大きくなるとドレイン電流 <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> は飽和してしまう。<a href="#f_vd" data-ref="fig"></a> で見られた歪み開始点と <a href="#vds_id" data-ref="fig"></a>の法話会支店に関係があり、 <span class="math inline" data-math-typeset="true">\(v_{D}\)</span> が <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の関数であると仮定すれば、出力電圧 <span class="math inline" data-math-typeset="true">\(v_{D}\)</span> が歪みだすのはドレイン電流 <span class="math inline" data-math-typeset="true">\(I_{D}\)</span> の飽和によるためと考えられる。</p>
+        </section>
+        <section class="level3" aria-labelledby="周波数帯域">
+          <h3 id="周波数帯域">周波数帯域</h3>
+          <p>電圧増幅率の最大値の <span class="math inline" data-math-typeset="true">\(2^{-0.5}\)</span> 倍以上の周波数範囲（周波数帯域）を求める。<a href="#vds_id" data-ref="fig"></a> より <span class="math inline" data-math-typeset="true">\(\mu\)</span> の最大値は 17 なので</p>
+          <p><span class="math display" data-math-typeset="true">$$
+17 \times 2^{-0.5} = 12
+$$</span></p>
+          <p>よって周波数帯域は</p>
+          <p><span class="math display" data-math-typeset="true">$$
+10 \mathrm{Hz} \leq f \leq 100 \mathrm{kHz}
+$$</span></p>
+          <p>となる。</p><!-- 図 -->
+          <figure>
+            <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yamasy1549/20200808/20200808222501.png" alt="$V_{GS} - I_{D}$ 特性の近似" id="vgs">
+            <figcaption aria-hidden="true">$V_{GS} - I_{D}$ 特性の近似</figcaption>
+          </figure><!-- ここまで図 --><!--
+            section囲みを回避するために直接h2タグを挿入する
+            将来的には末尾に # を挿入することで制御可能になる
+            https://github.com/vivliostyle/vfm/issues/155
+          -->
+          <h2>参考文献</h2>
+          <ol class="reference">
+            <li>TOKYO ELECTRON, 半導体の原理, http://origin.tel.co.jp/museum/exhibition/principle/, 参照2020/08/08</li>
+            <li>19章 電界効果トランジスタ, http://windofweef.web.fc2.com/library/preinform/5/54/549/img/549_30a_20.pdf, 参照2020/08/08</li>
+            <li>マルツエレック株式会社, MOS FET, http://www.marutsu.co.jp/contents/shop/marutsu/mame/56.html, 参照2020/08/08</li>
+            <li>山形大学大学院理工学研究科 廣瀬文研究室, 第 6 章 MOSFET, http://fhirose.yz.yamagata-u.ac.jp/text/mos6.pdf, 参照2020/08/08</li>
+          </ol>
+        </section>
+      </section>
+    </section>
+  </body>
+</html>

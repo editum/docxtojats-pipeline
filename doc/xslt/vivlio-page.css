@@ -1,0 +1,18 @@
+@page {
+  size: A4;
+  margin: 2cm 2cm; /* margen superior, derecho, inferior, izquierdo */
+
+  @top-left-corner {
+    content: "";
+    background-color: #68bfda; /* color de fondo del margen superior */
+    display: block;
+    height: 2cm; /* altura del margen */
+  }
+
+  @bottom-left-corner {
+    content: "";
+    background-color: #f0f0f0; /* color de fondo del margen inferior */
+    display: block;
+    height: 2cm;
+  }
+}

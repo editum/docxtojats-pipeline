@@ -1,0 +1,227 @@
+FROM php:7.4-apache-bullseye
+
+# -----------------------------
+# Instalación paquetes base (snapshot + backports)
+# -----------------------------
+ARG UPDATE_IMAGE=1
+ARG BACKPORTS_URL=http://archive.debian.org/debian
+
+# Instalar composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# Actualizar base e instalar paquetes
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    . /etc/os-release; \
+    # ⚙️ Activar backports si está habilitado
+    if [ -n "${BACKPORTS_URL}" ] && [ -n "${VERSION_CODENAME}" ]; then \
+        echo "deb ${BACKPORTS_URL} ${VERSION_CODENAME}-backports main" > /etc/apt/sources.list.d/backports.list; \
+    fi; \
+    # 🔄 Actualizar paquetes base si está habilitado
+    if [ "$UPDATE_IMAGE" = "1" ] || [ "$UPDATE_IMAGE" = "true" ]; then \
+        echo "🔄 Actualizando base ($VERSION_CODENAME)..."; \
+        apt-get update -o Acquire::Check-Valid-Until=false && \
+        apt-get dist-upgrade -y; \
+    fi; \
+    # 📦 Instalar dependencias necesarias
+    echo "📦 Instalando dependencias..."; \
+    if ! command -v curl > /dev/null; then \
+        apt-get update -o Acquire::Check-Valid-Until=false && apt-get install -y curl; \
+    fi; \
+    curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash; \
+    apt-get update -o Acquire::Check-Valid-Until=false && \
+    apt-get install -y --no-install-recommends \
+        apt-utils apt-transport-https \
+        gosu rsync git zip unzip cron locales gnupg \
+        vim less wget curl jq memcached \
+        libzip-dev libicu-dev libxml2-dev libpng-dev libldap2-dev \
+        libjpeg-dev libfreetype6-dev libonig-dev libcurl4-openssl-dev \
+        libmemcached-dev zlib1g-dev \
+        symfony-cli; \
+    # 🧹 Limpiar caché de APT
+    apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# -----------------------------
+# Compilar extensiones PHP
+# -----------------------------
+RUN echo "⚙️  Compilando extensiones PHP..." ; \
+    docker-php-ext-configure gd --with-jpeg --with-freetype && \
+    docker-php-ext-install intl pdo pdo_mysql opcache mbstring zip curl xml dom fileinfo bcmath iconv gd ldap && \
+    PHP_VER=$(php -r 'echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;') && \
+    pecl install memcached && \
+    pecl install $( [ "$PHP_VER" -le "74" ] && echo xdebug-3.1.6 || echo xdebug ) && \
+    docker-php-ext-enable memcached xdebug
+
+# -----------------------------
+# Application required packages
+# -----------------------------
+
+# Conversion tools like libreoffice, pandoc, exiftool, calibre, fop...
+RUN export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update -o Acquire::Check-Valid-Until=false && \
+    apt-get install -y --no-install-recommends \
+        wget xdg-utils xz-utils python3 \
+        pandoc exiftool calibre fop unoconv \
+        # Anonimizer
+        hyphen-af hyphen-en-us \
+        fonts-arphic-ukai fonts-arphic-uming fonts-arundina fonts-beng fonts-beng-extra fonts-bpg-georgian \
+        fonts-cantarell fonts-crosextra-caladea fonts-crosextra-carlito fonts-dejavu fonts-dejavu-core fonts-dejavu-extra \
+        fonts-deva fonts-deva-extra fonts-droid-fallback fonts-dustin fonts-dzongkha fonts-ecolier-court \
+        fonts-ecolier-lignes-court fonts-f500 fonts-fanwood fonts-farsiweb fonts-freefont-ttf fonts-gargi \
+        fonts-gujr fonts-gujr-extra fonts-guru fonts-guru-extra fonts-hosny-amiri fonts-hosny-thabit \
+        fonts-ipafont fonts-ipafont-gothic fonts-ipafont-mincho fonts-kacst fonts-kacst-one fonts-kalapi \
+        fonts-khmeros fonts-lato fonts-liberation fonts-liberation2 fonts-linex fonts-linuxlibertine \
+        fonts-lmodern fonts-lohit-beng-assamese fonts-lohit-beng-bengali fonts-lohit-deva fonts-lohit-gujr fonts-lohit-guru \
+        fonts-lohit-knda fonts-lohit-mlym fonts-lohit-taml fonts-lohit-taml-classical fonts-lohit-telu fonts-lyx \
+        fonts-mlym fonts-nakula fonts-nanum fonts-nanum-coding fonts-noto fonts-noto-cjk \
+        fonts-noto-cjk-extra fonts-noto-color-emoji fonts-noto-core fonts-noto-extra fonts-noto-hinted fonts-noto-mono \
+        fonts-noto-ui-core fonts-noto-ui-extra fonts-noto-unhinted fonts-opensymbol fonts-quicksand fonts-sahadeva \
+        fonts-samyak-deva fonts-samyak-gujr fonts-samyak-mlym fonts-samyak-taml fonts-sarai fonts-sil-abyssinica \
+        fonts-sil-andika fonts-sil-gentium fonts-sil-gentium-basic fonts-sil-scheherazade fonts-sipa-arundina fonts-smc \
+        fonts-smc-anjalioldlipi fonts-smc-chilanka fonts-smc-dyuthi fonts-smc-gayathri fonts-smc-karumbi fonts-smc-keraleeyam \
+        fonts-smc-manjari fonts-smc-meera fonts-smc-rachana fonts-smc-raghumalayalamsans fonts-smc-suruma fonts-smc-uroob \
+        fonts-symbola fonts-taml fonts-telu fonts-telu-extra fonts-teluguvijayam fonts-texgyre \
+        fonts-thai-tlwg fonts-tlwg-garuda fonts-tlwg-garuda-ttf fonts-tlwg-kinnari fonts-tlwg-kinnari-ttf fonts-tlwg-laksaman \
+        fonts-tlwg-laksaman-ttf fonts-tlwg-loma fonts-tlwg-loma-ttf fonts-tlwg-mono fonts-tlwg-mono-ttf fonts-tlwg-norasi \
+        fonts-tlwg-norasi-ttf fonts-tlwg-purisa fonts-tlwg-purisa-ttf fonts-tlwg-sawasdee fonts-tlwg-sawasdee-ttf fonts-tlwg-typewriter \
+        fonts-tlwg-typewriter-ttf fonts-tlwg-typist fonts-tlwg-typist-ttf fonts-tlwg-typo fonts-tlwg-typo-ttf fonts-tlwg-umpush \
+        fonts-tlwg-umpush-ttf fonts-tlwg-waree fonts-tlwg-waree-ttf fonts-ukij-uyghur fonts-unifont fonts-unikurdweb \
+        fonts-urw-base35 fonts-vlgothic fonts-yrsa-rasa && \
+    apt-get -t bullseye-backports install -y libreoffice-core libreoffice-writer libreoffice-calc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# -----------------------------
+# External aplications
+#   📚 AnyStyle
+#   ⚙️ Saxon HE jar
+#   ⚙️ XMLCalabash (xproc)
+#   🖨️ wkhtmltopdf (the version included with apt does not support html header and footer)
+#   📙 vivliostyle (conversion from html to pdf)
+# -----------------------------
+ARG SAXON_VERSION=12.7
+ARG WKHTMLTOPDF_DOWNLOAD=https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb
+ARG XMLCALABASH_VERSION=1.5.7-120
+
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    SAXON_VERSION_URL="$(echo "$SAXON_VERSION" | sed 's/\./-/g')"; \
+    apt-get update -o Acquire::Check-Valid-Until=false && \
+    apt-get install -y --no-install-recommends \
+        wget unzip \
+        # AnyStyle deps
+        ruby-rubygems ruby-dev poppler-utils \
+        # Saxon deps
+        openjdk-11-jre-headless \
+        # wkhtmltopdf deps
+        xfonts-75dpi xfonts-base fontconfig libjpeg62-turbo libxrender1 libxext6 ca-certificates && \
+    \
+    # 📚 AnyStyle
+    gem install anystyle-cli && \
+    \
+    # ⚙️ Saxon
+    wget -O /tmp/saxon.zip "https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE${SAXON_VERSION_URL}/SaxonHE${SAXON_VERSION_URL}J.zip" && \
+    unzip /tmp/saxon.zip -d /opt/saxon && rm /tmp/saxon.zip && \
+    echo '#!/bin/sh\njava -jar /opt/saxon/saxon-he-'${SAXON_VERSION}'.jar "$@"' > /usr/local/bin/saxon && chmod +x /usr/local/bin/saxon && \
+    \
+    # ⚙️ xmlcalabash (Xproc .xpl)
+    wget -O /tmp/xmlcalabash.zip "https://github.com/ndw/xmlcalabash1/releases/download/${XMLCALABASH_VERSION}/xmlcalabash-${XMLCALABASH_VERSION}.zip" && \
+    unzip /tmp/xmlcalabash.zip -d /opt/xmlcalabash && rm /tmp/xmlcalabash.zip && \
+    echo '#!/bin/sh\njava -cp "/opt/xmlcalabash/xmlcalabash-'${XMLCALABASH_VERSION}'/xmlcalabash-'${XMLCALABASH_VERSION}'.jar" com.xmlcalabash.drivers.Main "$@"' > /usr/local/bin/calabash && \
+    chmod +x /usr/local/bin/calabash && \
+    \
+    # 🖨️ wkhtmltopdf
+    wget -O /tmp/wkhtmltox.deb "${WKHTMLTOPDF_DOWNLOAD}" && \
+    dpkg -i /tmp/wkhtmltox.deb || apt-get -f install -y && rm /tmp/wkhtmltox.deb && \
+    \
+    # 🧹 Clean
+    apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# 📙 vivliostyle and update nodejs
+RUN apt-get update && apt-get install -y \
+    wget unzip curl gnupg \
+    openjdk-11-jre-headless \
+    # Chromium/Playwright dependencies (vivliostyle will download chromium in the first run)
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libgtk-3-0 \
+    libx11-xcb1 \
+    libxcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgdk-pixbuf2.0-0 \
+    libpangocairo-1.0-0 \
+    libpango-1.0-0 \
+    libcups2 \
+    libxshmfence1 \
+    libxtst6 \
+    libnss3 \
+    libasound2 \
+    libgbm1 \
+    libxss1 \
+    libdrm2 \
+    libx11-6 \
+    libxext6 \
+    libxrender1 \
+    libpci3 \
+    libglib2.0-0 \
+    libcurl4 \
+    fonts-liberation \
+    xdg-utils \
+ && rm -rf /var/lib/apt/lists/* \
+ && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    npm install -g @vivliostyle/cli && \
+    npm cache clean --force
+
+# -----------------------------
+# Setup
+# -----------------------------
+ARG APP_ENV
+ARG APP_NAME
+ARG PUSER=www-data
+ARG PGROUP=www-data
+ARG PUID
+ARG PGID
+
+ENV APP_ENV=$APP_ENV
+ENV APP_NAME=$APP_NAME
+ENV PUSER=$PUSER
+ENV PGROUP=$PGROUP
+ENV PUID=$PUID
+ENV PGID=$PGID
+
+# Change www-data UID amd GID. Create home if not in production
+RUN usermod -u $PUID www-data && \
+    groupmod -g $PGID www-data && \
+    if [ "$APP_ENV" != "prod" ] ; then \
+        usermod --shell /bin/bash --home /home/www-data www-data && \
+        mkhomedir_helper www-data ; \
+    fi
+
+# Xdebug
+#COPY ./docker/conf/php/limits.ini /usr/local/etc/php/conf.d/limits.ini
+COPY ./docker/conf/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+# Apache configuration
+COPY ./docker/conf/apache/sites-available/000-default.conf /etc/apache2/sites-available/
+RUN a2enmod rewrite
+
+# Link to the www proyect
+RUN ln -s /opt/${APP_NAME}/public /var/www/${APP_NAME}
+
+# Run composer install if composer.json exists
+RUN set -eux; \
+    git config --global --add safe.directory '*'; \
+    if [ -f composer.json ]; then \
+        composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
+        composer clear-cache; \
+    fi
+
+# Copy entrypoint and make it executable
+COPY ./docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD ["apache2-foreground"]

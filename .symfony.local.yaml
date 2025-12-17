@@ -1,0 +1,2 @@
+server:
+  php_ini: ./.symfony.local.php.ini

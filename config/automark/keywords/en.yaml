@@ -1,0 +1,27 @@
+# 🇬🇧 EN — English
+keywords:
+  # Used to detect bibliography sections by title
+  bibliography:
+    - References
+    - Bibliography
+    - Works Cited
+    - Literature Cited
+    - Sources
+    # Sometimes before bibliography
+    - Conclusion
+    - Conclusions
+    # Sometimes in books or chapters
+    - Notes and References
+    # Humanities or popular science
+    - Recommended Reading
+
+  # Used to detect figure titles
+  figure:
+    - graphic
+    - figure
+    - image
+    - illustration
+
+  # Used to detect table titles
+  table:
+    - table

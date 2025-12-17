@@ -1,0 +1,75 @@
+# Scielo lookup tables
+mappings:
+  # CSL → Jats Publication type mapping
+  csl2jats_publication_type_map:
+    # Articles in journals and newspapers
+    article-journal:   journal
+    article-magazine:  journal
+    article-newspaper: newspaper
+    article:           journal
+
+    # Books and book chapters
+    book:              book
+    chapter:           book
+    book-section:      book
+
+    # Conference/proceedings
+    paper-conference:  confproc
+    proceedings:       confproc
+
+    # Theses and dissertations
+    thesis:            thesis
+    dissertation:      thesis
+    monograph:         thesis
+
+    # Technical and institutional reports
+    report:            report
+    technical-report:  report
+
+    # Research data/databases
+    dataset:           data
+    database:          database
+
+    # Websites and blogs
+    webpage:           webpage
+    blog-post:         webpage
+    post:              webpage
+    post-weblog:       webpage
+    website:           webpage
+
+    # Software
+    software:          software
+    code:              software
+
+    # Patentes
+    patent:            patent
+
+    # Legal/regulatory documents
+    legal_case:        legal-doc
+    legal_document:    legal-doc
+    statute:           legal-doc
+
+    # Other/fallback
+    manuscript:        other
+    encyclopedia:      other
+    map:               other
+    motion_picture:    other
+    interview:         other
+    podcast:           other
+    broadcast:         other
+
+  # Jats publication title → Publication title tag map
+  publication_title_tag_map:
+    book:       source            # For full books; use 'chapter-title' if it's a book chapter
+    confproc:   source            # Name of the conference or proceedings
+    database:   source            # Name of the database
+    journal:    article-title     # Article title; <source> optional for journal
+    patent:     article-title     # Patent title
+    report:     article-title     # Technical report title
+    software:   article-title     # Software name; <source> optional if applicable
+    thesis:     article-title     # Thesis or dissertation title
+    webpage:    article-title     # Web page title; <source> optional
+    legal-doc:  article-title     # Law or legal document title
+    newspaper:  article-title     # Newspaper article title; <source> for the newspaper
+    data:       article-title     # Dataset name
+    other:      article-title     # Generic fallback
