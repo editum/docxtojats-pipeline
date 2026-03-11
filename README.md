@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18958457.svg)](https://doi.org/10.5281/zenodo.18958457)
+
 # AutoMark — doc2jats-pipeline
 
 ## Tool for converting DOC/DOCX documents to JATS XML with advanced automarking capabilities and other stuff.
