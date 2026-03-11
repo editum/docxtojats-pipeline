@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: docxtojats-pipeline
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Editum
+    given-names: Research and Publishing Support Service
+    affiliation: Universidad de Murcia
+repository-code: https://github.com/editum/docxtojats-pipeline
+url: https://github.com/editum/docxtojats-pipeline
+abstract: >
+  Pipeline for converting DOCX manuscripts into JATS XML, supporting
+  automated markup and integration with scholarly publishing workflows.
+keywords:
+  - JATS
+  - DOCX
+  - XML
+  - scholarly publishing
+  - OJS
+  - document conversion
+license: GPL-2.0
+date-released: 2025-01-01
