@@ -262,6 +262,118 @@ class DocumentConverterController extends AbstractController implements LoggerAw
     }
 
     /**
+     * Jats publisher V2.
+     * Publishes a jats to html and pdf and returns a zip file with 'pubs/' dir inside.
+     * NOTE: The xml must be in the root of the zip file.
+     * @Route("/jatsPublisherV2", name="jatsPublisherV2")
+     */
+    public function jatsPublisherV2(Request $request, \App\Service\DocConversion\App\JatsPublisherV2 $jatsPublisherV2)
+    {
+        // Create the form
+        $form = $this->createForm(\App\Form\UploadJatsPublisherV2FormType::class);
+        $form->handleRequest($request);
+
+        $response = $this->downloadFile(
+            $request,
+            $form,
+            'form.html.twig',
+            [
+                'title' => 'JatsPublisher V2',
+                'description' => 'Publish the jats document to html and pdf. The zip file must include the images.',
+                'form' => $form
+            ],
+            function(UploadedFile $uploadedFile, string $workdir) use ($jatsPublisherV2, $form) :string {
+                // Extract archive to woking dir
+                $inputZip = new \ZipArchive();
+                if ($inputZip->open($uploadedFile->getPathname()) !== true) {
+                    throw new \RuntimeException('Unable to open ZIP file');
+                }
+                if (!$inputZip->extractTo($workdir)) {
+                    $inputZip->close();
+                    throw new \RuntimeException('Failed to extract ZIP');
+                }
+                $inputZip->close();
+
+                // Search the xml
+                $files = [];
+                foreach (scandir($workdir) as $file) {
+                    if (preg_match('/\.xml$/i', $file)) {
+                        $files[] = $workdir . DIRECTORY_SEPARATOR . $file;
+                    }
+                }
+
+                if (empty($files)) {
+                    throw new \RuntimeException("No JATS XML document found in ZIP file");
+                }
+
+                if (count($files) > 1) {
+                    throw new \RuntimeException('Only one JATS XML document was expected');
+                }
+
+                $jatsFile = $files[0];
+
+                // Get theme, config and format
+                $theme = $form->get('theme')->getData() ?? 'base';
+                $format = $form->has('format') ? ($form->get('format')->getData() ?? 'all') : 'all';
+                $preview = $form->has('preview') ? (bool) $form->get('preview')->getData() : false;
+                $configJsonPath = null;
+                if ($configFile = $form->get('configFile')->getData()) {
+                    $configJsonPath = $configFile->getPathname();
+                }
+
+                $outputDir = $workdir . DIRECTORY_SEPARATOR . 'pubs';
+
+                // Publish V2
+                if (!$jatsPublisherV2($jatsFile, $theme, $configJsonPath, $outputDir, $format, $preview)) {
+                    throw new \RuntimeException('Failed to convert JATS document');
+                }
+
+                // Archive the output
+                $outputName = basename($jatsFile, '.xml') . '.zip';
+                $outputZip = new \ZipArchive();
+
+                if (! $outputZip->open($outputName, \ZipArchive::CREATE)) {
+                    throw new \RuntimeException('Failed to create ZIP file');
+                }
+
+                // Add everything in pubs to the zip, under the pubs/ folder
+                $this->addDirToZip($outputDir, $outputZip, 'pubs');
+                $outputZip->close();
+
+                return $outputName;
+            }
+        );
+
+        return $response;
+    }
+
+    private function addDirToZip(string $dir, \ZipArchive $zip, string $basePath = '')
+    {
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        // Add the base directory itself
+        if ($basePath !== '') {
+            $zip->addEmptyDir($basePath);
+        }
+
+        foreach ($files as $file) {
+            $filePath = $file->getRealPath();
+            $relativePath = $basePath !== '' 
+                ? $basePath . '/' . substr($filePath, strlen($dir) + 1)
+                : substr($filePath, strlen($dir) + 1);
+
+            if ($file->isDir()) {
+                $zip->addEmptyDir($relativePath);
+            } else {
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+    }
+
+    /**
      * Auxiliar function to get the 'inputFile' from a form and return a file calling a callback function.
      * It will create a temporal directory and change to it.
      * The file in the response will have the name returned by the callback.

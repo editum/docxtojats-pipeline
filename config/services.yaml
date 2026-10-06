@@ -9,6 +9,8 @@ parameters:
     exiftool.bin: "%env(string:EXIFTOOL_BIN)%"
     libreoffice.bin: '%env(string:LIBREOFFICE_BIN)%'
     pandoc.bin: "%env(string:PANDOC_BIN)%"
+    # Node binary for format-jats (JatsPublisherV2); override with NODE_BIN
+    default_node_bin: node
     # Permissions
     dirmode:  "%env(default:default_dirmode:int:DIRMODE)%"
     default_dirmode: 0777
@@ -99,6 +101,14 @@ services:
     # Others
     App\Service\DocConversion\App\JatsPublisher:
         $bin: '%kernel.project_dir%/bin/jats2html-pdf.sh'
+
+    # Bind the format-jats bundle paths to the project dir so JatsPublisherV2
+    # works regardless of the install path (the constructor default points to a
+    # fixed /opt/doc2jats-pipeline that only matches the Docker image).
+    App\Service\DocConversion\App\JatsPublisherV2:
+        $scriptPath: '%kernel.project_dir%/format-jats/bin/index.js'
+        $templatesDir: '%kernel.project_dir%/format-jats/templates'
+        $nodeBin: '%env(default:default_node_bin:string:NODE_BIN)%'
 
     App\Validator\FileValidator:
         tags: [ 'validator.constraint_validator' ]
