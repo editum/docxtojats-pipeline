@@ -1,0 +1,145 @@
+@import url('theme.css');
+
+@page {
+  size: A4;
+  margin: 25mm 20mm 25mm 20mm;
+  @top-center {
+    content: string(article-title);
+    font-size: 9pt;
+    color: #666;
+  }
+  @bottom-center {
+    content: counter(page);
+    font-size: 10pt;
+  }
+}
+
+h1 {
+  string-set: article-title content();
+  break-before: page;
+}
+
+h2 {
+  break-after: avoid;
+}
+
+.table-label,
+.table-caption,
+.fig-label,
+.fig-caption {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+p {
+  widows: 2;
+  orphans: 2;
+}
+
+figure, table {
+  break-inside: avoid;
+}
+
+figure img {
+  /* Forzar a que la imagen escale si es muy alta para dejar sitio a la leyenda en la página */
+  max-height: 85vh !important;
+  object-fit: contain;
+}
+
+.footnote {
+  float: footnote;
+}
+
+.toc a::after {
+  content: target-counter(attr(href), page);
+  float: right;
+}
+/* themes/basic/print-style.css */
+@page {
+  size: A4;
+  margin: 25mm 20mm;
+  @top-center {
+    content: element(header);
+    width: 100%;
+  }
+  @bottom-center {
+    content: element(footer);
+    width: 100%;
+  }
+}
+
+@page :first {
+  @top-center {
+    content: none;
+  }
+  @bottom-center {
+    content: none;
+  }
+}
+
+body {
+  font-size: 10pt;
+}
+
+table {
+  font-size: 9pt;
+}
+
+.issue-cover {
+  max-width: 120px;
+  margin-bottom: 1rem;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.pdf-header {
+  display: flex !important;
+  position: running(header);
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8pt;
+  margin-bottom: 5mm;
+}
+
+.header-title {
+  text-transform: uppercase;
+  flex: 0 0 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.header-page {
+  flex: 0 0 5%;
+  text-align: right;
+}
+.header-page::after {
+  content: counter(page);
+}
+
+.pdf-footer {
+  display: block !important;
+  position: running(footer);
+  width: 100%;
+  font-size: 9pt;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+}
+
+.footer-journal {
+  font-style: italic;
+  border-bottom: 1px solid #7ea8e6;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
+  display: inline-block;
+}
+
+.footer-doi {
+  text-align: center;
+}
+.footer-doi a {
+  color: blue;
+  text-decoration: underline;
+}

@@ -75,8 +75,9 @@ You may check the [Dockerfile](docker/Dockerfile.7.4-apache-bullseye) for refere
 - Optional since it is **WIP**:
     - Java (required by XMLCalabash)
     - [XMLCalabash](https://codeberg.org/xmlcalabash/xmlcalabash3/src/branch/main/README.org)
-    - NodeJS (required by Vivliostyle CLI)
-    - [Vivliostyle CLI](https://github.com/vivliostyle/vivliostyle-cli/blob/main/README.md)
+    - NodeJS 18+ (required to run `jatsPublisherV2` and `Vivliostyle CLI`)
+    - [Vivliostyle CLI](https://github.com/vivliostyle/vivliostyle-cli/blob/main/README.md) (install globally via `npm install -g @vivliostyle/cli`). 
+    - The internal `format-jats` tool requires installing its production dependencies. After cloning, run: `cd format-jats && npm install --omit=dev`.
 
 #### Steps
 1. Clone or download this repository. For example into `/opt/docxtojats-pipeline`.
@@ -94,6 +95,7 @@ echo APP_ENV=prod > .env.local
 4. Install project dependencies:
 ```bash
 composer install
+cd format-jats && npm install --omit=dev && cd ..
 ```
 
 5. After installation you will have all CLI commands available.

@@ -1,0 +1,287 @@
+:root {
+  --primary-color: #2c3e50;
+  --text-color: #333;
+  --bg-color: #fff;
+  --font-family: 'Helvetica Neue', Arial, sans-serif;
+  --heading-font: 'Georgia', serif;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading-font);
+  color: var(--primary-color);
+}
+
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+.missing-asset {
+  border: 2px dashed #e74c3c;
+  padding: 1rem;
+  color: #e74c3c;
+  background-color: #fadbd8;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+@import url('theme.css');
+
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  font-family: 'Times New Roman', Times, serif;
+  text-align: justify;
+  line-height: 1.15;
+}
+
+p {
+  text-indent: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  text-align-last: left !important;
+}
+
+/* Hidden PDF Elements */
+.pdf-header,
+.pdf-footer {
+  display: none;
+}
+
+/* Front Matter */
+.article-meta {
+  font-size: 0.9em;
+  margin: 0 3rem;
+}
+
+/* Issue Cover */
+.issue-cover {
+  text-align: center;
+  margin: auto;
+  max-width: 250px;
+  margin-bottom: 2rem;
+}
+
+.issue-cover img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Authors */
+.contrib-group {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.contrib {
+  margin-bottom: 1rem;
+}
+
+.title-group {
+  text-align: center;
+}
+
+.title-group h1 {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-size: 1.35em;
+}
+
+.author-email-link {
+  color: black;
+  text-decoration: none;
+}
+
+.author-email-link:hover {
+  text-decoration: underline;
+}
+
+.author-name {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.orcid a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.orcid-logo {
+  height: 1em;
+  width: auto;
+  margin-right: 0.5em;
+}
+
+/* Front Matter Meta Blocks */
+.meta-block {
+  margin-bottom: 1.25rem;
+}
+
+.meta-block p {
+  margin: 0;
+  text-indent: 0;
+}
+
+.meta-label {
+  font-weight: bold;
+}
+
+.trans-title {
+  text-transform: uppercase;
+}
+
+.copyright-block,
+.history-block {
+  margin-top: 1rem;
+}
+
+.copyright-block p,
+.history-block p {
+  margin: 0;
+  text-indent: 0;
+}
+
+/* Tables — APA Style */
+.table-wrap {
+  margin: 2em 0;
+}
+
+.table-label {
+  margin: 0;
+  text-indent: 0;
+}
+
+.table-caption {
+  margin: 0;
+  text-indent: 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+table th,
+table td {
+  border: none;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+/* APA: line below header row */
+table thead tr:last-child th,
+table thead tr:last-child td,
+table tbody tr:first-child th,
+table tbody tr:first-child td {
+  border-top: 1px solid #000;
+}
+
+/* If first row of tbody acts as header (no thead), add bottom border */
+table:not(:has(thead)) tbody tr:first-child td,
+table:not(:has(thead)) tbody tr:first-child th {
+  border-bottom: 1px solid #000;
+  font-weight: bold;
+}
+
+.table-foot {
+  font-size: 0.9em;
+  margin-top: 0.25em;
+}
+
+.table-foot p {
+  text-indent: 0;
+  margin: 0;
+}
+
+/* Figures — APA Style */
+figure {
+  margin: 2em 0;
+  text-align: center;
+}
+
+.fig-label {
+  margin: 0;
+  text-indent: 0;
+  text-align: left;
+}
+
+.fig-caption {
+  margin: 0;
+  text-indent: 0;
+  text-align: left;
+}
+
+.fig-foot {
+  font-size: 0.9em;
+  text-align: left;
+  margin-top: 0.5em;
+}
+
+.fig-foot p {
+  text-indent: 0;
+  margin: 0;
+}
+
+/* Notes */
+.notes {
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.note p {
+  display: inline;
+  margin: 0;
+}
+
+/* References */
+.references ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.references li.reference {
+  margin-left: 2em;
+  text-indent: -2em;
+  margin-bottom: 1em;
+}
+
+/* Inline formatting utilities */
+.small-caps {
+  font-variant: small-caps;
+}

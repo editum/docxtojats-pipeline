@@ -1,0 +1,60 @@
+@import url("../../base/style/print-style.css");
+
+/* Margen personalizado para analesps: 10mm izquierda/derecha, 25mm arriba/abajo */
+@page {
+  margin: 25mm 10mm;
+}
+
+/* Evitar que el padding del body desalinee el texto con las cajas de margen (donde van los números de página) */
+body {
+  padding: 0 !important;
+  margin: 0 auto !important;
+}
+
+/* Reducir el tamaño del número de página para que coincida con las cabeceras */
+@page :left {
+  @top-left {
+    font-size: 8pt;
+  }
+}
+
+@page :right {
+  @top-right {
+    font-size: 8pt;
+  }
+}
+
+/* Personalización de cabeceras y pies en impresión (cursiva y 0.8em) */
+.pdf-custom-header-even,
+.pdf-custom-header-odd,
+.pdf-custom-footer-even,
+.pdf-custom-footer-odd {
+  font-style: italic !important;
+  font-size: 0.8em !important;
+}
+
+/* Evitar salto de página entre la cabecera gris y el título del artículo (h1) */
+header.front h1, .title-group h1 {
+  break-before: avoid !important;
+  page-break-before: avoid !important;
+}
+
+header.front {
+  break-after: avoid;
+}
+
+.analesps-header {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.analesps-abstracts-grid {
+  font-size: 7pt; /* Más pequeño y compacto específico en impresión (antes 8pt) */
+  line-height: 1.2;
+}
+
+.analesps-corresp-box {
+  font-size: 7.5pt;
+  break-before: avoid;
+  page-break-before: avoid;
+}

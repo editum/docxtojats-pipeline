@@ -10,6 +10,14 @@ if [ -f "${APP_DIR}/composer.json" ]; then
     composer install
 fi
 
+# Setup format-jats
+if [ -f "${APP_DIR}/format-jats/package.json" ]; then
+    echo "Installing format-jats dependencies..."
+    cd "${APP_DIR}/format-jats"
+    npm install --omit=dev
+    cd "${APP_DIR}"
+fi
+
 # Php configuration
 if [ -n "$PHP_CUSTOM_INI" ]; then
   echo "$PHP_CUSTOM_INI" > /usr/local/etc/php/conf.d/zzz-custom.ini
