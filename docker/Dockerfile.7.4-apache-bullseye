@@ -10,8 +10,13 @@ ARG BACKPORTS_URL=http://archive.debian.org/debian
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Actualizar base e instalar paquetes
+# 🔧 Bullseye EOL: reescribir sources.list para usar archive.debian.org
+#    (debian-security ya no existe en archive, se elimina)
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
+    # Reescribir sources.list completo para Bullseye EOL
+    echo "deb http://archive.debian.org/debian bullseye main" > /etc/apt/sources.list; \
+    echo "deb http://archive.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list; \
     . /etc/os-release; \
     # ⚙️ Activar backports si está habilitado
     if [ -n "${BACKPORTS_URL}" ] && [ -n "${VERSION_CODENAME}" ]; then \
