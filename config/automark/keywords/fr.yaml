@@ -28,3 +28,9 @@ keywords:
   # Utilisé pour détecter les titres des tableaux
   table:
     - tableau
+
+  # Utilisé pour détecter les notes et sous-titres de tableaux et figures
+  note:
+    - note
+    - notes
+    - sous-titre

@@ -25,3 +25,10 @@ keywords:
   # Usado para detectar títulos de tabelas
   table:
     - tabela
+
+  # Usado para detectar notas e subtítulos de tabelas e figuras
+  note:
+    - nota
+    - notas
+    - subtítulo
+    - subtitulo

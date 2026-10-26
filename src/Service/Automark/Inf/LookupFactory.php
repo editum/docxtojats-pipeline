@@ -82,6 +82,16 @@ final class LookupFactory
         return $this->getKeywords('table');
     }
 
+    /**
+     * Returns an array with all the possible keywords used to detect notes and subtitles.
+     *
+     * @return array<string>
+     */
+    public function getNoteKeywords(): array
+    {
+        return $this->getKeywords('note');
+    }
+
 
     // === [Keyword specific categories] ===
 

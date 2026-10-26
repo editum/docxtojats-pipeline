@@ -72,8 +72,10 @@ services:
         $keywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getBibliographyKeywords()'
     App\Service\Automark\Dom\Caption\FiguresCaptionSetter:
         $keywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getFigureKeywords()'
+        $noteKeywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getNoteKeywords()'
     App\Service\Automark\Dom\Caption\TablesCaptionSetter:
         $keywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getTableKeywords()'
+        $noteKeywords: '@=service("App\\Service\\Automark\\Inf\\LookupFactory").getNoteKeywords()'
 
     App\Service\Automark\Dom\BibliographyGenerator:
         arguments:

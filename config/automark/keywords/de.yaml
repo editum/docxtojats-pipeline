@@ -26,3 +26,11 @@ keywords:
   # Wird verwendet, um Tabellenüberschriften zu erkennen
   table:
     - Tabelle
+
+  # Verwendet für Notizen und Untertitel von Tabellen und Figuren
+  note:
+    - anmerkung
+    - anmerkungen
+    - hinweis
+    - hinweise
+    - untertitel

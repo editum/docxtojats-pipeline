@@ -26,3 +26,10 @@ keywords:
   table:
     - tabla
     - cuadro
+
+  # Usado para detectar notas y subtítulos de tablas y figuras
+  note:
+    - nota
+    - notas
+    - subtítulo
+    - subtitulo
