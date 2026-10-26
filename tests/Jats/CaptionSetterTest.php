@@ -308,4 +308,88 @@ XML;
         $this->assertEquals('Note: Calculated using standard deviation.', $footP->item(0)->textContent);
         $this->assertEquals(0, $xpath->query('/article/body/p')->length);
     }
+
+    public function testTableWithExistingLabelAndTitleReferenceOptionAndNoteAfter(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        // Exact scenario reported: table with existing label and caption,
+        // setTitleReference=true inserts <p><xref ...></xref></p>, followed by Note.
+        $xml = <<<XML
+<article>
+    <body>
+        <table-wrap id="tbl1">
+            <label>Table 1</label>
+            <caption>
+                <title>. Descriptive Statistics and Bivariate Correlations</title>
+            </caption>
+            <table>
+                <tr><td>1</td></tr>
+            </table>
+        </table-wrap>
+        <p>
+            Note. ADSMU = average daily social media use, CO = cyberostracism, SE = self-esteem, PD = psychological distress, SMA = social media addiction, α = Cronbach’s alpha, ω = McDonald’s omega, * <italic>p</italic> &lt; .05, ** <italic>p</italic> &lt; .01.
+        </p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        ($this->tablesCaptionSetter)($xpath, true); // true = $setTitleReference
+
+        // 1. Table must have <table-wrap-foot> containing the Note
+        $footP = $xpath->query('//table-wrap/table-wrap-foot/p');
+        $this->assertEquals(1, $footP->length, '<table-wrap-foot> must contain the note paragraph');
+        $this->assertStringStartsWith('Note. ADSMU =', trim($footP->item(0)->textContent));
+
+        // 2. The reference paragraph must remain in the body
+        $bodyP = $xpath->query('/article/body/p');
+        $this->assertEquals(1, $bodyP->length, 'Only the generated reference paragraph should remain in body');
+        $xref = $xpath->query('/article/body/p/xref[@rid="tbl1"]');
+        $this->assertEquals(1, $xref->length);
+    }
+
+    public function testTableWithTitleAfterAndTitleReferenceOptionAndNoteAfter(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        $xml = <<<XML
+<article>
+    <body>
+        <table-wrap id="tbl1">
+            <table>
+                <tr><td>1</td></tr>
+            </table>
+        </table-wrap>
+        <p>Table 1: Descriptive Statistics and Bivariate Correlations</p>
+        <p>
+            Note. ADSMU = average daily social media use.
+        </p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        ($this->tablesCaptionSetter)($xpath, true); // true = $setTitleReference
+
+        // 1. Table must have label, caption and table-wrap-foot
+        $this->assertEquals('Table 1', $xpath->query('//table-wrap/label')->item(0)->textContent);
+        $footP = $xpath->query('//table-wrap/table-wrap-foot/p');
+        $this->assertEquals(1, $footP->length);
+        $this->assertStringStartsWith('Note. ADSMU =', trim($footP->item(0)->textContent));
+
+        // 2. The title paragraph was replaced by xref in body
+        $bodyP = $xpath->query('/article/body/p');
+        $this->assertEquals(1, $bodyP->length);
+        $this->assertEquals(1, $xpath->query('/article/body/p/xref[@rid="tbl1"]')->length);
+    }
 }
+

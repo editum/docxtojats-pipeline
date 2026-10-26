@@ -175,7 +175,7 @@ abstract class AbstractCaptionSetter
         }
 
         // Process any note paragraphs adjacent to the element
-        $this->processNotes($xpath, $el, $captionParagraphEl);
+        $this->processNotes($xpath, $el);
     }
 
     /**
@@ -241,36 +241,52 @@ abstract class AbstractCaptionSetter
 
     /**
      * Processes any note paragraphs (preceding or following) and attaches them to the element.
+     * Skips reference paragraphs pointing to this element.
      */
-    protected function processNotes(DOMXPath $xpath, DOMElement $el, ?DOMElement $captionParagraphEl = null): void
+    protected function processNotes(DOMXPath $xpath, DOMElement $el): void
     {
+        $rid = $el->getAttribute('id');
+
         // 1. Process notes in following sibling paragraphs (most common: notes placed after table/figure)
-        $followingAnchor = $el;
-        if ($captionParagraphEl && $captionParagraphEl->parentNode) {
-            if ($this->getNextSiblingElement($el) === $captionParagraphEl) {
-                $followingAnchor = $captionParagraphEl;
-            }
-        }
-        while (($next = $this->getNextSiblingElement($followingAnchor)) && $this->isNoteParagraph($next)) {
+        while (($next = $this->getNextSiblingElement($el, $rid)) && $this->isNoteParagraph($next)) {
             $this->setNote($xpath, $el, $next);
         }
 
         // 2. Process notes in preceding sibling paragraphs (notes/subtitles placed before table/figure)
-        $precedingAnchor = $el;
-        if ($captionParagraphEl && $captionParagraphEl->parentNode) {
-            if ($this->getPreviousSiblingElement($el) === $captionParagraphEl) {
-                $precedingAnchor = $captionParagraphEl;
-            }
-        }
-        while (($prev = $this->getPreviousSiblingElement($precedingAnchor)) && $this->isNoteParagraph($prev)) {
+        while (($prev = $this->getPreviousSiblingElement($el, $rid)) && $this->isNoteParagraph($prev)) {
             $this->setNote($xpath, $el, $prev);
         }
     }
 
     /**
-     * Gets the previous sibling element, skipping whitespace text nodes and empty paragraphs.
+     * Checks if a paragraph is a generated reference paragraph containing an xref to this element.
      */
-    protected function getPreviousSiblingElement(?DOMNode $node): ?DOMNode
+    protected function isReferenceParagraph(?DOMNode $node, string $rid): bool
+    {
+        if (null === $node || $node->nodeType !== XML_ELEMENT_NODE || $node->nodeName !== 'p') {
+            return false;
+        }
+
+        $xrefs = [];
+        foreach ($node->childNodes as $child) {
+            if ($child->nodeType === XML_TEXT_NODE && trim($child->textContent) === '') {
+                continue;
+            }
+            if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'xref') {
+                $xrefs[] = $child;
+                continue;
+            }
+            return false;
+        }
+
+        return count($xrefs) === 1 && $xrefs[0]->getAttribute('rid') === $rid;
+    }
+
+    /**
+     * Gets the previous sibling element, skipping whitespace text nodes, empty paragraphs,
+     * and optionally a reference paragraph pointing to $skipRid.
+     */
+    protected function getPreviousSiblingElement(?DOMNode $node, ?string $skipRid = null): ?DOMNode
     {
         $curr = $node ? $node->previousSibling : null;
         while ($curr) {
@@ -282,15 +298,20 @@ abstract class AbstractCaptionSetter
                 $curr = $curr->previousSibling;
                 continue;
             }
+            if ($skipRid && $this->isReferenceParagraph($curr, $skipRid)) {
+                $curr = $curr->previousSibling;
+                continue;
+            }
             break;
         }
         return ($curr && $curr->nodeType === XML_ELEMENT_NODE) ? $curr : null;
     }
 
     /**
-     * Gets the next sibling element, skipping whitespace text nodes and empty paragraphs.
+     * Gets the next sibling element, skipping whitespace text nodes, empty paragraphs,
+     * and optionally a reference paragraph pointing to $skipRid.
      */
-    protected function getNextSiblingElement(?DOMNode $node): ?DOMNode
+    protected function getNextSiblingElement(?DOMNode $node, ?string $skipRid = null): ?DOMNode
     {
         $curr = $node ? $node->nextSibling : null;
         while ($curr) {
@@ -299,6 +320,10 @@ abstract class AbstractCaptionSetter
                 continue;
             }
             if ($curr->nodeType === XML_ELEMENT_NODE && $curr->nodeName === 'p' && trim($curr->textContent) === '') {
+                $curr = $curr->nextSibling;
+                continue;
+            }
+            if ($skipRid && $this->isReferenceParagraph($curr, $skipRid)) {
                 $curr = $curr->nextSibling;
                 continue;
             }
@@ -327,9 +352,9 @@ abstract class AbstractCaptionSetter
         if (null !== $el
             && $el->nodeType === XML_ELEMENT_NODE
             && $el->nodeName === 'p'
-            && preg_match($this->noteRegex, trim($el->textContent))
         ) {
-            return true;
+            $text = preg_replace('/^\s+/u', '', $el->textContent);
+            return (bool) preg_match($this->noteRegex, $text);
         }
         return false;
     }
