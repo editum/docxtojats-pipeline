@@ -25,3 +25,10 @@ keywords:
   # Used to detect table titles
   table:
     - table
+
+  # Used to detect table and figure notes and subtitles
+  note:
+    - note
+    - notes
+    - subtitle
+    - subtitles

@@ -13,20 +13,47 @@ abstract class AbstractCaptionSetter
     const REF_TYPE = '';
     const QUERY_ELEMENT = '';
 
+    const DEFAULT_NOTE_KEYWORDS = [
+        'nota',
+        'notas',
+        'note',
+        'notes',
+        'subtítulo',
+        'subtitulo',
+        'subtitle',
+        'subtitles',
+        'sous-titre',
+        'anmerkung',
+        'anmerkungen',
+        'hinweis',
+        'hinweise',
+        'untertitel',
+    ];
+
     static ?bool $titlePrecedesElement = null;
 
     protected string $elQuery;
     protected string $captionRegex;
+    protected string $noteRegex;
     protected array $keywords;
+    protected array $noteKeywords;
 
     /**
      * @param array<string> $keywords Keywords used to identify plausible category titles.
+     * @param array<string> $noteKeywords Keywords used to identify plausible note/subtitle paragraphs.
      */
-    public function __construct(array $keywords)
+    public function __construct(array $keywords, array $noteKeywords = [])
     {
         $this->elQuery = static::QUERY_ELEMENT;
         $this->keywords = $keywords;
         $this->captionRegex = $this->getCaptionRegex();
+
+        $mergedNoteKeywords = array_unique(array_merge(
+            self::DEFAULT_NOTE_KEYWORDS,
+            array_map('mb_strtolower', $noteKeywords)
+        ));
+        $this->noteKeywords = array_values($mergedNoteKeywords);
+        $this->noteRegex = $this->getNoteRegex();
     }
 
     /**
@@ -43,7 +70,7 @@ abstract class AbstractCaptionSetter
      * Returns an array of label and node references to each element for replacements.
      * 
      * @param DOMXPath $xpath
-     * @param bool $setTittleReference sets a reference to the image where the title is
+     * @param bool $setTitleReference sets a reference to the image where the title is
      * @return array array of replacements ['label' => DomNode]
      */
     public function __invoke(DOMXPath $xpath, bool $setTitleReference): array
@@ -79,47 +106,76 @@ abstract class AbstractCaptionSetter
         $captionParts = null;
         $captionParagraphEl = null;
 
+        $prev1 = $this->getPreviousSiblingElement($el);
+        $prev2 = $prev1 ? $this->getPreviousSiblingElement($prev1) : null;
+        $next1 = $this->getNextSiblingElement($el);
+        $next2 = $next1 ? $this->getNextSiblingElement($next1) : null;
+
         // Find out if the caption comes in previous or next paragraph
         if (null === self::$titlePrecedesElement) {
-            if ($captionParts = $this->extractCaption($el->previousSibling)) {
-                $captionParagraphEl = $el->previousSibling;
+            if ($captionParts = $this->extractCaption($prev1)) {
+                $captionParagraphEl = $prev1;
                 self::$titlePrecedesElement = true;
-            } elseif ($captionParts = $this->extractCaption($el->nextSibling)) {
-                $captionParagraphEl = $el->nextSibling;
+            } elseif ($this->isNoteParagraph($prev1) && ($captionParts = $this->extractCaption($prev2))) {
+                $captionParagraphEl = $prev2;
+                self::$titlePrecedesElement = true;
+            } elseif ($captionParts = $this->extractCaption($next1)) {
+                $captionParagraphEl = $next1;
+                self::$titlePrecedesElement = false;
+            } elseif ($this->isNoteParagraph($next1) && ($captionParts = $this->extractCaption($next2))) {
+                $captionParagraphEl = $next2;
                 self::$titlePrecedesElement = false;
             }
-        } elseif ($captionParagraphEl = self::$titlePrecedesElement ? $el->previousSibling : $el->nextSibling) {
-            $captionParts = $this->extractCaption($captionParagraphEl);
-        }
-
-        // Nothing to do
-        if (! $captionParts) {
-            return;
-        }
-
-        list($category, $id, $title, $description) = $captionParts;
-
-        // Format caption parts
-        $label = $this->formatLabel($category, $id);
-        $title = $this->formatTitle($title);
-        $description = $this->formatDescription($description);
-
-        // Set the caption nodes
-        $this->setCaption($xpath, $el, $label, $title, $description);
-
-        // Add the replacement for the node
-        $xrefNode = $this->createRefNode($doc, $rid, $label);
-        $replacements[$label] = $xrefNode;
-
-        // Remove or replace with reference the caption paragraph
-        if ($setTitleReference) {
-            $xrefNode = clone $xrefNode;
-            $xrefNode->nodeValue = $captionParagraphEl->textContent;
-            $captionParagraphEl->textContent = '';
-            $captionParagraphEl->appendChild($xrefNode);
+        } elseif (self::$titlePrecedesElement) {
+            if ($captionParts = $this->extractCaption($prev1)) {
+                $captionParagraphEl = $prev1;
+            } elseif ($this->isNoteParagraph($prev1) && ($captionParts = $this->extractCaption($prev2))) {
+                $captionParagraphEl = $prev2;
+            } elseif ($captionParts = $this->extractCaption($next1)) {
+                $captionParagraphEl = $next1;
+            } elseif ($this->isNoteParagraph($next1) && ($captionParts = $this->extractCaption($next2))) {
+                $captionParagraphEl = $next2;
+            }
         } else {
-            $captionParagraphEl->parentNode->removeChild($captionParagraphEl);
+            if ($captionParts = $this->extractCaption($next1)) {
+                $captionParagraphEl = $next1;
+            } elseif ($this->isNoteParagraph($next1) && ($captionParts = $this->extractCaption($next2))) {
+                $captionParagraphEl = $next2;
+            } elseif ($captionParts = $this->extractCaption($prev1)) {
+                $captionParagraphEl = $prev1;
+            } elseif ($this->isNoteParagraph($prev1) && ($captionParts = $this->extractCaption($prev2))) {
+                $captionParagraphEl = $prev2;
+            }
         }
+
+        if ($captionParts && $captionParagraphEl) {
+            list($category, $id, $title, $description) = $captionParts;
+
+            // Format caption parts
+            $label = $this->formatLabel($category, $id);
+            $title = $this->formatTitle($title);
+            $description = $this->formatDescription($description);
+
+            // Set the caption nodes
+            $this->setCaption($xpath, $el, $label, $title, $description);
+
+            // Add the replacement for the node
+            $xrefNode = $this->createRefNode($doc, $rid, $label);
+            $replacements[$label] = $xrefNode;
+
+            // Remove or replace with reference the caption paragraph
+            if ($setTitleReference) {
+                $xrefNode = clone $xrefNode;
+                $xrefNode->nodeValue = $captionParagraphEl->textContent;
+                $captionParagraphEl->textContent = '';
+                $captionParagraphEl->appendChild($xrefNode);
+            } else {
+                $captionParagraphEl->parentNode->removeChild($captionParagraphEl);
+            }
+        }
+
+        // Process any note paragraphs adjacent to the element
+        $this->processNotes($xpath, $el, $captionParagraphEl);
     }
 
     /**
@@ -173,6 +229,109 @@ abstract class AbstractCaptionSetter
                 $el->parentNode->insertBefore($paragraph, $el->nextSibling);
             }
         }
+
+        // Process any note paragraphs adjacent to the element
+        $this->processNotes($xpath, $el);
+    }
+
+    /**
+     * Attaches a note paragraph to the target element (table or figure).
+     */
+    abstract protected function setNote(DOMXPath $xpath, DOMElement $el, DOMElement $noteParagraphEl): void;
+
+    /**
+     * Processes any note paragraphs (preceding or following) and attaches them to the element.
+     */
+    protected function processNotes(DOMXPath $xpath, DOMElement $el, ?DOMElement $captionParagraphEl = null): void
+    {
+        // 1. Process notes in following sibling paragraphs (most common: notes placed after table/figure)
+        $followingAnchor = $el;
+        if ($captionParagraphEl && $captionParagraphEl->parentNode) {
+            if ($this->getNextSiblingElement($el) === $captionParagraphEl) {
+                $followingAnchor = $captionParagraphEl;
+            }
+        }
+        while (($next = $this->getNextSiblingElement($followingAnchor)) && $this->isNoteParagraph($next)) {
+            $this->setNote($xpath, $el, $next);
+        }
+
+        // 2. Process notes in preceding sibling paragraphs (notes/subtitles placed before table/figure)
+        $precedingAnchor = $el;
+        if ($captionParagraphEl && $captionParagraphEl->parentNode) {
+            if ($this->getPreviousSiblingElement($el) === $captionParagraphEl) {
+                $precedingAnchor = $captionParagraphEl;
+            }
+        }
+        while (($prev = $this->getPreviousSiblingElement($precedingAnchor)) && $this->isNoteParagraph($prev)) {
+            $this->setNote($xpath, $el, $prev);
+        }
+    }
+
+    /**
+     * Gets the previous sibling element, skipping whitespace text nodes and empty paragraphs.
+     */
+    protected function getPreviousSiblingElement(?DOMNode $node): ?DOMNode
+    {
+        $curr = $node ? $node->previousSibling : null;
+        while ($curr) {
+            if ($curr->nodeType === XML_TEXT_NODE && trim($curr->textContent) === '') {
+                $curr = $curr->previousSibling;
+                continue;
+            }
+            if ($curr->nodeType === XML_ELEMENT_NODE && $curr->nodeName === 'p' && trim($curr->textContent) === '') {
+                $curr = $curr->previousSibling;
+                continue;
+            }
+            break;
+        }
+        return ($curr && $curr->nodeType === XML_ELEMENT_NODE) ? $curr : null;
+    }
+
+    /**
+     * Gets the next sibling element, skipping whitespace text nodes and empty paragraphs.
+     */
+    protected function getNextSiblingElement(?DOMNode $node): ?DOMNode
+    {
+        $curr = $node ? $node->nextSibling : null;
+        while ($curr) {
+            if ($curr->nodeType === XML_TEXT_NODE && trim($curr->textContent) === '') {
+                $curr = $curr->nextSibling;
+                continue;
+            }
+            if ($curr->nodeType === XML_ELEMENT_NODE && $curr->nodeName === 'p' && trim($curr->textContent) === '') {
+                $curr = $curr->nextSibling;
+                continue;
+            }
+            break;
+        }
+        return ($curr && $curr->nodeType === XML_ELEMENT_NODE) ? $curr : null;
+    }
+
+    /**
+     * Regex used to find a valid note or subtitle paragraph.
+     */
+    protected function getNoteRegex(): string
+    {
+        $escaped = array_map(function ($kw) {
+            return preg_quote($kw, '/');
+        }, $this->noteKeywords);
+
+        return '/^(' . implode('|', $escaped) . ')(\s*[:.,;—–-]|\s+(?:\d+|[a-zA-Z*]{1,3})[:.,;—–-]|\s+|$)/iu';
+    }
+
+    /**
+     * Checks if a DOM node is a paragraph representing a note or subtitle.
+     */
+    protected function isNoteParagraph(?DOMNode $el): bool
+    {
+        if (null !== $el
+            && $el->nodeType === XML_ELEMENT_NODE
+            && $el->nodeName === 'p'
+            && preg_match($this->noteRegex, trim($el->textContent))
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -239,7 +398,7 @@ abstract class AbstractCaptionSetter
             && ($el->nodeName === 'p' || $el->nodeName === 'label')
             && preg_match($this->captionRegex, $el->textContent, $parts)
         ) {
-            return [ $parts[1], $parts[2], trim($parts[3]), trim($parts[4]) ];
+            return [ $parts[1], $parts[2], trim($parts[3]), trim($parts[4] ?? '') ];
         }
         return null;
     }

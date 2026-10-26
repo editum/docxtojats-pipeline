@@ -82,3 +82,4 @@ Para la herramienta `format-jats` (dentro de `tools/format-jats/`): `npm test` (
 7. **Contrato con JATSWizard.** Los nombres de campo de formulario (`doc_to_jats_form[...]`, `upload_zip_file_form[...]`) y el formato de respuesta (ZIP con `article.xml`/`article.json`) son el **contrato con el plugin**. Si los cambias, actualiza también `JATSWizard/classes/PipelineApiClient.inc.php`.
 8. **Tests.** Añade/actualiza pruebas en `tests/` (PHPUnit) para lógica nueva relevante.
 9. **Documenta en español** cuando amplíes esta guía o el README, para mantener coherencia con el proyecto.
+10. **Commits en inglés**: todos los mensajes de commit deben redactarse en **inglés** (Conventional Commits: `feat: ...`, `fix: ...`, etc.).
