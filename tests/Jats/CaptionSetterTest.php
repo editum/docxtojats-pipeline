@@ -531,5 +531,55 @@ XML;
         $this->assertEquals(1, $tbl2Foot->length);
         $this->assertEquals('Note. Note belonging to Table 2.', trim($tbl2Foot->item(0)->textContent));
     }
+
+    public function testAutomarkDoesNotProcessTitlesOrNotesWhenDisabled(): void
+    {
+        $automark = self::getContainer()->get(\App\Service\Automark\App\Automark::class);
+
+        $xml = <<<XML
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body>
+        <p>Table 5: Model Fit Indices</p>
+        <table-wrap id="tbl5">
+            <table><tr><td>1</td></tr></table>
+        </table-wrap>
+        <p>Note. Note for Table 5.</p>
+        <p>Figure 2: Model Diagram</p>
+        <fig id="fig2">
+            <graphic xlink:href="image2.png"/>
+        </fig>
+        <p>Note. Note for Figure 2.</p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+
+        // Call automark with setFiguresTitles = false and setTablesTitles = false
+        $automark(
+            $dom,
+            null,   // citationStyleName
+            null,   // cslReferences
+            false,  // generateBibliography
+            false,  // generateBibliographyMixedCitations
+            false,  // generateCitations
+            false,  // setFiguresTitles (DISABLED)
+            false,  // setTablesTitles (DISABLED)
+            false   // replaceTitlesWithReferences
+        );
+
+        $xpath = new DOMXPath($dom);
+
+        // Neither table nor figure should have titles or notes processed
+        $this->assertEquals(0, $xpath->query('//table-wrap/table-wrap-foot')->length, 'No table-wrap-foot should be created when setTablesTitles is false');
+        $this->assertEquals(0, $xpath->query('//table-wrap/label')->length);
+        $this->assertEquals(0, $xpath->query('//fig/caption')->length, 'No fig caption should be created when setFiguresTitles is false');
+        $this->assertEquals(0, $xpath->query('//fig/label')->length);
+
+        // All 4 paragraphs must remain untouched in body
+        $this->assertEquals(4, $xpath->query('/article/body/p')->length, 'All title and note paragraphs must remain intact in body');
+    }
 }
 
