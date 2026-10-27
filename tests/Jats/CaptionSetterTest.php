@@ -391,5 +391,145 @@ XML;
         $this->assertEquals(1, $bodyP->length);
         $this->assertEquals(1, $xpath->query('/article/body/p/xref[@rid="tbl1"]')->length);
     }
+
+    public function testTableFollowedByFigureDoNotCrossContaminateNotes(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        // Exact bug scenario: Table with title and note, followed by Figure with title and note.
+        // FiguresCaptionSetter runs before TablesCaptionSetter in Automark.
+        $xml = <<<XML
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body>
+        <p>Table 5: Model Fit Indices for the Full Sample and Gender Groups</p>
+        <table-wrap id="tbl5">
+            <table>
+                <tr><td>Model 1</td><td>114.61</td></tr>
+            </table>
+        </table-wrap>
+        <p>Note. Models 1, 2, and 3 were initially tested in the full sample.</p>
+        <p>Figure 2: Standardized Path Estimates for the Mediation Model</p>
+        <fig id="fig2">
+            <graphic xlink:href="image2.png"/>
+        </fig>
+        <p>Note. The figure presents standardized estimates for the full sample.</p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        // Run in the exact order as Automark: figures first, then tables
+        ($this->figuresCaptionSetter)($xpath, true);
+        ($this->tablesCaptionSetter)($xpath, true);
+
+        // 1. Table 5 must have its own note in table-wrap-foot
+        $tableFootP = $xpath->query('//table-wrap[@id="tbl5"]/table-wrap-foot/p');
+        $this->assertEquals(1, $tableFootP->length, 'Table 5 must have exactly 1 note in table-wrap-foot');
+        $this->assertStringStartsWith('Note. Models 1, 2, and 3', trim($tableFootP->item(0)->textContent));
+
+        // 2. Figure 2 must have its own note in caption
+        $figCaptionP = $xpath->query('//fig[@id="fig2"]/caption/p');
+        $this->assertEquals(1, $figCaptionP->length, 'Figure 2 must have exactly 1 note in caption');
+        $this->assertStringStartsWith('Note. The figure presents', trim($figCaptionP->item(0)->textContent));
+
+        // 3. Ensure Table 5 note did NOT end up inside Figure 2
+        $figAllText = $xpath->query('//fig[@id="fig2"]')->item(0)->textContent;
+        $this->assertStringNotContainsString('Models 1, 2, and 3', $figAllText, 'Figure 2 must not contain Table 5 note');
+
+        // 4. Ensure Figure 2 note did NOT end up inside Table 5
+        $tableAllText = $xpath->query('//table-wrap[@id="tbl5"]')->item(0)->textContent;
+        $this->assertStringNotContainsString('The figure presents', $tableAllText, 'Table 5 must not contain Figure 2 note');
+    }
+
+    public function testTableFollowedByFigureWithExistingLabelsDoNotCrossContaminateNotes(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        // Scenario where docx2jats already generated labels/captions, followed by notes in body
+        $xml = <<<XML
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body>
+        <table-wrap id="tbl5">
+            <label>Table 5</label>
+            <caption>
+                <title>. Model Fit Indices</title>
+            </caption>
+            <table>
+                <tr><td>1</td></tr>
+            </table>
+        </table-wrap>
+        <p>Note. Table 5 note explaining fit indices.</p>
+        <fig id="fig2">
+            <label>Figure 2</label>
+            <caption>
+                <title>. Path Estimates</title>
+            </caption>
+            <graphic xlink:href="image2.png"/>
+        </fig>
+        <p>Note. Figure 2 note explaining path estimates.</p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        // Run figures first, then tables with setTitleReference = true
+        ($this->figuresCaptionSetter)($xpath, true);
+        ($this->tablesCaptionSetter)($xpath, true);
+
+        // Table 5 note
+        $tableFootP = $xpath->query('//table-wrap[@id="tbl5"]/table-wrap-foot/p');
+        $this->assertEquals(1, $tableFootP->length);
+        $this->assertEquals('Note. Table 5 note explaining fit indices.', trim($tableFootP->item(0)->textContent));
+
+        // Figure 2 note
+        $figCaptionP = $xpath->query('//fig[@id="fig2"]/caption/p');
+        $this->assertEquals(1, $figCaptionP->length);
+        $this->assertEquals('Note. Figure 2 note explaining path estimates.', trim($figCaptionP->item(0)->textContent));
+    }
+
+    public function testTwoConsecutiveTablesDoNotCrossContaminateNotes(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        $xml = <<<XML
+<article>
+    <body>
+        <p>Table 1: First table title</p>
+        <table-wrap id="tbl1">
+            <table><tr><td>1</td></tr></table>
+        </table-wrap>
+        <p>Note. Note belonging to Table 1.</p>
+        <p>Table 2: Second table title</p>
+        <table-wrap id="tbl2">
+            <table><tr><td>2</td></tr></table>
+        </table-wrap>
+        <p>Note. Note belonging to Table 2.</p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        ($this->tablesCaptionSetter)($xpath, true);
+
+        $tbl1Foot = $xpath->query('//table-wrap[@id="tbl1"]/table-wrap-foot/p');
+        $this->assertEquals(1, $tbl1Foot->length);
+        $this->assertEquals('Note. Note belonging to Table 1.', trim($tbl1Foot->item(0)->textContent));
+
+        $tbl2Foot = $xpath->query('//table-wrap[@id="tbl2"]/table-wrap-foot/p');
+        $this->assertEquals(1, $tbl2Foot->length);
+        $this->assertEquals('Note. Note belonging to Table 2.', trim($tbl2Foot->item(0)->textContent));
+    }
 }
 
