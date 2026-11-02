@@ -126,7 +126,7 @@ class XmlUtils
 
         // Sort labels by desscending lenght to prevent prefix colissions
         uksort($replacements, function ($a, $b) {
-            return mb_strlen($b) <=> mb_strlen($a);
+            return mb_strlen((string) $b) <=> mb_strlen((string) $a);
         });
 
         // Define strpos function based in case sensitive
@@ -144,9 +144,10 @@ class XmlUtils
             $hasNewSegments = false;
 
             foreach ($replacements as $label => $nodeTemplate) {
-                // Test parameters
-                if (! is_string($label)) {
-                    throw new InvalidArgumentException("The label \"{$label}\" for replacements must be a string");
+                // Ensure label is string (numeric array keys in PHP are automatically cast to int)
+                $label = (string) $label;
+                if ($label === '') {
+                    throw new InvalidArgumentException("The label for replacements cannot be empty");
                 }
                 if (! $nodeTemplate instanceof \DOMNode && ! $nodeTemplate instanceof \DOMDocumentFragment) {
                     throw new InvalidArgumentException("The replacement for \"{$label}\" must be a DOMNode");

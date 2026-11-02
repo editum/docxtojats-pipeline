@@ -197,4 +197,33 @@ class XmlNodeReplacementTest extends TestCase
 
         $this->assertXmlStringEqualsXmlString($expect, $result);
     }
+
+    public function testReplacementWithNumericLabel()
+    {
+        $caseInsensitive = false;
+        $wordBoundary = true;
+        $xml = <<<XML
+            <body>
+                <p>Publicado en 2001 por el autor.</p>
+            </body>
+            XML;
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->loadXML($xml);
+
+        // In PHP, '2001' as an array key is automatically cast to int(2001)
+        $this->runReplace($doc, [
+            '2001' => $this->createNode($doc, '2001'),
+        ], $caseInsensitive, $wordBoundary);
+
+        $result = $doc->saveXML();
+        $expect = <<<XML
+            <?xml version="1.0"?>
+            <body>
+                <p>Publicado en <xref>2001</xref> por el autor.</p>
+            </body>
+            XML;
+
+        $this->assertXmlStringEqualsXmlString($expect, $result);
+    }
 }
+
