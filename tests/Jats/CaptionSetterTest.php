@@ -581,5 +581,92 @@ XML;
         // All 4 paragraphs must remain untouched in body
         $this->assertEquals(4, $xpath->query('/article/body/p')->length, 'All title and note paragraphs must remain intact in body');
     }
+
+    public function testFigureWithSubletterNumbering(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        $xml = <<<XML
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body>
+        <fig id="fig1">
+            <graphic xlink:href="image1.png"/>
+        </fig>
+        <p>Figura 1a. Primeros libros documentados de impresores activos en ciudades hispanas: cronología 1472–1491</p>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        ($this->figuresCaptionSetter)($xpath, false);
+
+        $this->assertEquals('Figura 1a', $xpath->query('//fig/label')->item(0)->textContent);
+        $this->assertEquals(
+            'Primeros libros documentados de impresores activos en ciudades hispanas: cronología 1472–1491',
+            $xpath->query('//fig/caption/title')->item(0)->textContent
+        );
+        $this->assertEquals(0, $xpath->query('/article/body/p')->length);
+    }
+
+    public function testFigureWithCompoundDotNumbering(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        $xml = <<<XML
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body>
+        <p>Figura 1.1. Diagrama de flujo del proceso de selección</p>
+        <fig id="fig1">
+            <graphic xlink:href="image1.png"/>
+        </fig>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        ($this->figuresCaptionSetter)($xpath, false);
+
+        $this->assertEquals('Figura 1.1', $xpath->query('//fig/label')->item(0)->textContent);
+        $this->assertEquals(
+            'Diagrama de flujo del proceso de selección',
+            $xpath->query('//fig/caption/title')->item(0)->textContent
+        );
+        $this->assertEquals(0, $xpath->query('/article/body/p')->length);
+    }
+
+    public function testTableWithCompoundNumbering(): void
+    {
+        AbstractCaptionSetter::resetTitlePosition();
+
+        $xml = <<<XML
+<article>
+    <body>
+        <p>Tabla 2.3: Resumen de coeficientes estandarizados.</p>
+        <table-wrap id="tbl1">
+            <table><tr><td>1</td></tr></table>
+        </table-wrap>
+    </body>
+</article>
+XML;
+
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($xml);
+        $xpath = new DOMXPath($dom);
+
+        ($this->tablesCaptionSetter)($xpath, false);
+
+        $this->assertEquals('Tabla 2.3', $xpath->query('//table-wrap/label')->item(0)->textContent);
+        $this->assertEquals('Resumen de coeficientes estandarizados', $xpath->query('//table-wrap/caption/title')->item(0)->textContent);
+        $this->assertEquals(0, $xpath->query('/article/body/p')->length);
+    }
 }
 

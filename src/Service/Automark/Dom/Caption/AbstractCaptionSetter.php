@@ -438,9 +438,7 @@ abstract class AbstractCaptionSetter
      */
     protected function getCaptionRegex(): string
     {
-        return '/^('.implode('|', $this->keywords).')\s+(\w+|\d+)[:.,;]\s*([^.]+)(?:\.\s*)?(.*)?$/i';
-        //return '/^('.implode('|', static::LABEL_CATEGORIES).')\s+(\w+|\d+)[:.,;]\s*([^\.]+)\.\s*(.*)?$/i';
-        //return '/^('.implode('|', static::LABEL_CATEGORIES).')\s(\w+|\d+)[:.,;](.+)/i';
+        return '/^(' . implode('|', $this->keywords) . ')\s+([\p{L}\p{N}]+(?:[.\s-][\p{L}\p{N}]+)*)\s*[:.,;—–-]\s*([^.]+)(?:\.\s*)?(.*)?$/iu';
     }
 
     /**
