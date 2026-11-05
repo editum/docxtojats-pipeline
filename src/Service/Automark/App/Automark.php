@@ -114,7 +114,7 @@ final class Automark implements LoggerAwareInterface
             $style = $this->citationStyleFactory->get($citationStyleName);
             $this->cslRepository->clear();
             foreach ($cslReferences as $csl) {
-                $id = $style->generateId($csl->{CslRepositoryInterface::NOTE});
+                $id = $style->generateId($csl->{CslRepositoryInterface::NOTE} ?? '');
                 $this->cslRepository->add($id, $csl);
             }
 

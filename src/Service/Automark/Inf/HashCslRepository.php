@@ -42,8 +42,8 @@ final class HashCslRepository implements CslRepositoryInterface, LoggerAwareInte
         $csl->{self::FIRST_PAGE} = $firstPage;
         $csl->{self::LAST_PAGE} = $lastPage;
         if (property_exists($csl, self::CITATIONS)) {
-            if (is_array($csl->{self::CITATIONS})) {
-                $csl->{self::CITATIONS} = array_unique($csl->{self::CITATIONS});
+            if (is_array($csl->{self::CITATIONS}) || $csl->{self::CITATIONS} instanceof stdClass) {
+                $csl->{self::CITATIONS} = array_values(array_unique((array) $csl->{self::CITATIONS}));
             }
             elseif (is_string($csl->{self::CITATIONS})) {
                 $csl->{self::CITATIONS} = [$csl->{self::CITATIONS}];
