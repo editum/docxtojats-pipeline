@@ -49682,7 +49682,25 @@ async function build(xmlPath, options = {}) {
     if (!await fileExists2(xslPath)) {
       xslPath = path5.resolve(templatesDir, "base/xslt/main.xsl");
     }
-    await transformXmlToHtmlFragment(xmlPath, xslPath, fragmentPath);
+    let xmlInputForXslt = xmlPath;
+    let tempXmlPath;
+    if (xmlContent.includes("<mml:") && !/<article\b[^>]*\bxmlns:mml\s*=/.test(xmlContent)) {
+      const normalizedXml = xmlContent.replace(
+        /<article\b/,
+        '<article xmlns:mml="http://www.w3.org/1998/Math/MathML"'
+      );
+      tempXmlPath = path5.join(outDir, `${baseName}-normalized.xml`);
+      await import_node_fs3.promises.writeFile(tempXmlPath, normalizedXml, "utf8");
+      xmlInputForXslt = tempXmlPath;
+    }
+    try {
+      await transformXmlToHtmlFragment(xmlInputForXslt, xslPath, fragmentPath);
+    } finally {
+      if (tempXmlPath) {
+        await import_node_fs3.promises.unlink(tempXmlPath).catch(() => {
+        });
+      }
+    }
     let shellPath = path5.resolve(templatesDir, `${themeName}/html/base.html`);
     if (!await fileExists2(shellPath)) {
       shellPath = path5.resolve(templatesDir, "base/html/base.html");
