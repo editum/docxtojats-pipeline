@@ -477,7 +477,12 @@ class DocumentConverterController extends AbstractController implements LoggerAw
         // Do the conversion using the callback
         try {
             $this->logger->info('Starting conversion.', $logContext);
-            $outputFile = $callback($inputFile, $workdir);
+            ob_start();
+            try {
+                $outputFile = $callback($inputFile, $workdir);
+            } finally {
+                ob_end_clean();
+            }
             if (! $this->filesystem->exists($outputFile)) {
                 throw new \RuntimeException('Error converting file.');
             }
