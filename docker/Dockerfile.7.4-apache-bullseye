@@ -39,7 +39,7 @@ RUN set -eux; \
         apt-utils apt-transport-https \
         gosu rsync git zip unzip cron locales gnupg \
         vim less wget curl jq memcached \
-        libzip-dev libicu-dev libxml2-dev libpng-dev libldap2-dev \
+        libzip-dev libicu-dev libxml2-dev libxslt1-dev libpng-dev libldap2-dev \
         libjpeg-dev libfreetype6-dev libonig-dev libcurl4-openssl-dev \
         libmemcached-dev zlib1g-dev \
         symfony-cli; \
@@ -51,7 +51,7 @@ RUN set -eux; \
 # -----------------------------
 RUN echo "⚙️  Compilando extensiones PHP..." ; \
     docker-php-ext-configure gd --with-jpeg --with-freetype && \
-    docker-php-ext-install intl pdo pdo_mysql opcache mbstring zip curl xml dom fileinfo bcmath iconv gd ldap && \
+    docker-php-ext-install intl pdo pdo_mysql opcache mbstring zip curl xml dom xsl fileinfo bcmath iconv gd ldap && \
     PHP_VER=$(php -r 'echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;') && \
     pecl install memcached && \
     pecl install $( [ "$PHP_VER" -le "74" ] && echo xdebug-3.1.6 || echo xdebug ) && \

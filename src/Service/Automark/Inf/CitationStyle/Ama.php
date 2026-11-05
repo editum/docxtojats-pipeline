@@ -21,7 +21,7 @@ final class Ama extends AbstractCitationStyle implements SupportsNodeReplacement
 
     const NAME                  = 'ama';
     const DISPLAY_NAME          = 'American Medical Association (AMA)';
-    const DOM_XPATH_QUERY       = '/article/body//sup';
+    const DOM_XPATH_QUERY       = '/article/body//sup[not(ancestor::inline-formula) and not(ancestor::disp-formula)]';
 
     //const PATTERN_CITATION = '/^((?:(?:\d+|\d+[-–]\d+),\s?)*(?:\d+|\d+[-–]\d+))$/u';
     const PATTERN_CITATION = '/^((?:\d+(?:[-–]\d+)?)(?:,\d+(?:[-–]\d+)?)*)$/u';

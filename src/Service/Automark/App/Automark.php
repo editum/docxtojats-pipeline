@@ -20,9 +20,9 @@ final class Automark implements LoggerAwareInterface
 {
     /** @var string search query to be used when replacing substrings with xref nodes */
     const SUBS_QUERY = <<<'XPATH'
-    /article/body//p//text()[not(ancestor::xref)] |
-    /article/front//abstract//p//text()[not(ancestor::xref)] |
-    /article/body//td[not(.//p)]//text()[not(ancestor::xref)]
+    /article/body//p//text()[not(ancestor::xref) and not(ancestor::inline-formula) and not(ancestor::disp-formula)] |
+    /article/front//abstract//p//text()[not(ancestor::xref) and not(ancestor::inline-formula) and not(ancestor::disp-formula)] |
+    /article/body//td[not(.//p)]//text()[not(ancestor::xref) and not(ancestor::inline-formula) and not(ancestor::disp-formula)]
     XPATH;
 
     private LoggerInterface $logger;

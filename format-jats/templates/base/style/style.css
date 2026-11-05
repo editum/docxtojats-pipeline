@@ -317,3 +317,14 @@ figure {
 .small-caps {
   font-variant: small-caps;
 }
+
+/* Formulas */
+disp-formula {
+  display: block;
+  margin: 0.4em 0;
+  text-indent: 0;
+}
+
+inline-formula {
+  display: inline;
+}
