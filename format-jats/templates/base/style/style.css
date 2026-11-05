@@ -192,8 +192,8 @@ p {
 table {
   border-collapse: collapse;
   width: 100%;
-  border-top: 2px solid #000;
-  border-bottom: 2px solid #000;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }
 
 table th,
@@ -201,6 +201,14 @@ table td {
   border: none;
   padding: 6px 8px;
   text-align: left;
+}
+
+table th,
+table thead th,
+table thead td,
+table tr:first-child th,
+table tr:first-child td {
+  font-weight: normal;
 }
 
 /* APA: line below header row */
@@ -212,11 +220,33 @@ table tbody tr:first-child td {
 }
 
 /* If first row of tbody acts as header (no thead), add bottom border */
-table:not(:has(thead)) tbody tr:first-child td,
-table:not(:has(thead)) tbody tr:first-child th {
+/* 1. Tablas simples (sin celdas con colspan en la primera fila) */
+table:not(:has(thead)):not(:has(tbody tr:first-child > :is(td, th)[colspan])) tbody tr:first-child > :is(td, th) {
   border-bottom: 1px solid #000;
-  font-weight: bold;
+  font-weight: normal;
 }
+
+/* 2. Tablas con cabecera multinivel (con colspan en la primera fila) */
+/* 2a. Regla de agrupación (spanner rule): línea debajo de las celdas con colspan */
+table:not(:has(thead)) tbody tr:first-child > :is(td, th)[colspan] {
+  border-bottom: 1px solid #000;
+}
+
+/* 2b. Cierre de cabecera: borde inferior en la 2ª fila y en celdas con rowspan */
+table:not(:has(thead)) tbody tr:first-child:has(> :is(td, th)[colspan]) + tr > :is(td, th),
+table:not(:has(thead)) tbody tr:first-child:has(> :is(td, th)[colspan]) > :is(td, th)[rowspan] {
+  border-bottom: 1px solid #000;
+}
+
+/* Estilo opcional: bordes horizontales en todas las filas (style: "line-borders") */
+.table-wrap.line-borders table:has(thead) tbody tr > :is(td, th),
+.table-wrap.line-borders table:not(:has(thead)) tbody tr:not(:first-child) > :is(td, th),
+table.line-borders:has(thead) tbody tr > :is(td, th),
+table.line-borders:not(:has(thead)) tbody tr:not(:first-child) > :is(td, th) {
+  border-bottom: 1px solid #000;
+}
+
+
 
 .table-foot {
   font-size: 0.9em;
@@ -278,8 +308,10 @@ figure {
 .references li.reference {
   margin-left: 2em;
   text-indent: -2em;
-  margin-bottom: 1em;
+  margin-bottom: 0.8em;
+  line-height: 1.15;
 }
+
 
 /* Inline formatting utilities */
 .small-caps {

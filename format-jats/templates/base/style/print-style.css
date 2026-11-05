@@ -2,17 +2,50 @@
 
 @page {
   size: A4;
-  margin: 25mm 20mm 25mm 20mm;
+  margin: 25mm 20mm;
+  @top-left {
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
   @top-center {
-    content: string(article-title);
-    font-size: 9pt;
-    color: #666;
+    content: element(header);
+    width: 100%;
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
+  @top-right {
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
+  @bottom-left {
+    vertical-align: top;
+    padding-top: 2mm;
   }
   @bottom-center {
-    content: counter(page);
-    font-size: 10pt;
+    content: element(footer);
+    width: 100%;
+    vertical-align: top;
+    padding-top: 2mm;
+  }
+  @bottom-right {
+    vertical-align: top;
+    padding-top: 2mm;
   }
 }
+
+@page :first {
+  @top-center {
+    content: none;
+  }
+  @bottom-center {
+    content: none;
+  }
+}
+
+@page landscape {
+  size: A4 landscape;
+}
+
 
 h1 {
   string-set: article-title content();
@@ -54,29 +87,6 @@ figure img {
   content: target-counter(attr(href), page);
   float: right;
 }
-/* themes/basic/print-style.css */
-@page {
-  size: A4;
-  margin: 25mm 20mm;
-  @top-center {
-    content: element(header);
-    width: 100%;
-  }
-  @bottom-center {
-    content: element(footer);
-    width: 100%;
-  }
-}
-
-@page :first {
-  @top-center {
-    content: none;
-  }
-  @bottom-center {
-    content: none;
-  }
-}
-
 body {
   font-size: 10pt;
 }
@@ -99,7 +109,7 @@ table {
   justify-content: space-between;
   align-items: center;
   font-size: 8pt;
-  margin-bottom: 5mm;
+  margin-bottom: 2mm;
 }
 
 .header-title {
@@ -126,7 +136,9 @@ table {
   font-size: 9pt;
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
+  margin-top: 2mm;
 }
+
 
 .footer-journal {
   font-style: italic;

@@ -1,8 +1,9 @@
 @import url("../../base/style/print-style.css");
 
-/* Margen personalizado para analesps: 10mm izquierda/derecha, 25mm arriba/abajo */
 @page {
-  margin: 25mm 10mm;
+  margin: 25mm 20mm;
+  font-family: 'Garamond', 'Georgia', 'Times New Roman', serif;
+  font-size: 8pt;
 }
 
 /* Evitar que el padding del body desalinee el texto con las cajas de margen (donde van los números de página) */
@@ -11,26 +12,58 @@ body {
   margin: 0 auto !important;
 }
 
-/* Reducir el tamaño del número de página para que coincida con las cabeceras */
+/* Alinear tamaño, fuente y posición del número de página con las cabeceras y separar 2mm más del texto */
 @page :left {
   @top-left {
     font-size: 8pt;
+    font-family: 'Garamond', 'Georgia', 'Times New Roman', serif;
+    vertical-align: bottom;
+    padding-bottom: 4.65mm;
+    line-height: normal;
+  }
+  @top-center {
+    padding-bottom: 4mm;
+  }
+  @top-right {
+    padding-bottom: 4mm;
   }
 }
 
 @page :right {
+  @top-left {
+    padding-bottom: 4mm;
+  }
+  @top-center {
+    padding-bottom: 4mm;
+  }
   @top-right {
     font-size: 8pt;
+    font-family: 'Garamond', 'Georgia', 'Times New Roman', serif;
+    vertical-align: bottom;
+    padding-bottom: 4.65mm;
+    line-height: normal;
   }
 }
 
-/* Personalización de cabeceras y pies en impresión (cursiva y 0.8em) */
+/* Personalización de cabeceras y pies en impresión (cursiva, 8pt y alineados) */
 .pdf-custom-header-even,
-.pdf-custom-header-odd,
+.pdf-custom-header-odd {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-style: italic !important;
+  font-size: 8pt !important;
+  font-family: 'Garamond', 'Georgia', 'Times New Roman', serif !important;
+  line-height: normal !important;
+}
+
 .pdf-custom-footer-even,
 .pdf-custom-footer-odd {
+  margin: 0 !important;
+  padding: 0 !important;
   font-style: italic !important;
-  font-size: 0.8em !important;
+  font-size: 8pt !important;
+  font-family: 'Garamond', 'Georgia', 'Times New Roman', serif !important;
+  line-height: normal !important;
 }
 
 /* Evitar salto de página entre la cabecera gris y el título del artículo (h1) */

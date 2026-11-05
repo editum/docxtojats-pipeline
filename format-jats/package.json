@@ -10,7 +10,7 @@
     "build:app": "npm run build:standalone && npm run build:templates",
     "build:standalone": "esbuild src/cli/index.ts --bundle --platform=node --target=node18 --outfile=dist/bin/index.js",
     "build:templates": "mkdir -p dist && cp -R src/templates dist/",
-    "deploy": "sh -c 'TARGET=${1:-../../format-jats}; npm run build:app && rm -rf \"$TARGET\" && mkdir -p \"$TARGET\" && cp -R dist/* \"$TARGET\"/ && cp package.json package-lock.json \"$TARGET\"/ && npm install --omit=dev --prefix \"$TARGET\"' _",
+    "deploy": "sh -c 'TARGET=${1:-../docxtojats-pipeline-github/format-jats}; npm run build:app && rm -rf \"$TARGET\" && mkdir -p \"$TARGET\" && cp -R dist/* \"$TARGET\"/ && cp package.json package-lock.json \"$TARGET\"/ && npm install --omit=dev --prefix \"$TARGET\"' _",
     "test": "vitest run",
     "test:watch": "vitest",
     "dev": "tsc -w"
