@@ -57,8 +57,33 @@
         </a>
     </xsl:template>
 
+    <xsl:template match="disp-formula | disp-formula-group">
+        <disp-formula>
+            <xsl:if test="@id">
+                <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+            </xsl:if>
+            <span class="formula-body">
+                <xsl:for-each select="node()[not(self::label)]">
+                    <xsl:choose>
+                        <xsl:when test="self::disp-formula">
+                            <xsl:apply-templates select="node()[not(self::label)]"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </span>
+            <xsl:if test="label">
+                <span class="formula-label">
+                    <xsl:apply-templates select="label/node()"/>
+                </span>
+            </xsl:if>
+        </disp-formula>
+    </xsl:template>
+
     <xsl:template match="mml:math" xmlns:mml="http://www.w3.org/1998/Math/MathML">
-        <xsl:copy-of select="."/>
+        <xsl:copy-of select="." copy-namespaces="no"/>
     </xsl:template>
 
     <xsl:template match="text()[not(ancestor::ext-link) and contains(., 'http')]">

@@ -163,7 +163,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/editum/docxtojats.git",
-                "reference": "c598fc3ba3c57741b1bbf8a786bfeefcffc12b2d"
+                "reference": "58a9b0f81edd70a74ef5d27421078bb15fe68a71"
             },
             "require": {
                 "citation-style-language/locales": "@dev",

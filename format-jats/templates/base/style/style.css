@@ -320,9 +320,34 @@ figure {
 
 /* Formulas */
 disp-formula {
-  display: block;
-  margin: 0.4em 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  margin: 0.8em 0;
   text-indent: 0;
+}
+
+disp-formula > .formula-body {
+  grid-column: 2;
+  justify-self: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+}
+
+disp-formula > .formula-body > p {
+  text-indent: 0;
+  margin: 0;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+disp-formula > .formula-label {
+  grid-column: 3;
+  justify-self: end;
+  padding-left: 1em;
 }
 
 inline-formula {

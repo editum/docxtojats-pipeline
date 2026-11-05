@@ -37,19 +37,28 @@ class FormulaConversionTest extends TestCase
         $this->assertEquals('x', $xpath->query('.//mml:msup//mml:mi', $inlineMath)->item(0)->textContent);
         $this->assertEquals('2', $xpath->query('.//mml:msup//mml:mn', $inlineMath)->item(0)->textContent);
 
-        // 2. Check disp-formula with fraction, radical, and n-ary summation
-        $dispFormulas = $xpath->query('//body//disp-formula/mml:math');
-        $this->assertEquals(2, $dispFormulas->count(), 'Should extract 2 disp-formula elements with mml:math');
+        // 2. Check disp-formula with fraction, radical, and n-ary summation and trailing paragraph label (1)
+        $dispFormulas = $xpath->query('//body//disp-formula');
+        $this->assertEquals(3, $dispFormulas->count(), 'Should extract 3 disp-formula elements');
 
-        $firstDispMath = $dispFormulas->item(0);
-        $this->assertEquals(1, $xpath->query('.//mml:mfrac', $firstDispMath)->count(), 'First disp-formula should contain mml:mfrac');
-        $this->assertEquals(1, $xpath->query('.//mml:msqrt', $firstDispMath)->count(), 'First disp-formula should contain mml:msqrt');
-        $this->assertEquals(1, $xpath->query('.//mml:munderover', $firstDispMath)->count(), 'First disp-formula should contain mml:munderover');
+        $firstDisp = $dispFormulas->item(0);
+        $this->assertEquals('e1', $firstDisp->getAttribute('id'));
+        $this->assertEquals('(1)', $xpath->evaluate('string(label)', $firstDisp));
+        $this->assertEquals(1, $xpath->query('.//mml:mfrac', $firstDisp)->count(), 'First disp-formula should contain mml:mfrac');
+        $this->assertEquals(1, $xpath->query('.//mml:msqrt', $firstDisp)->count(), 'First disp-formula should contain mml:msqrt');
+        $this->assertEquals(1, $xpath->query('.//mml:munderover', $firstDisp)->count(), 'First disp-formula should contain mml:munderover');
 
         // 3. Check pre-subscript (<m:sPre>) keeps empty <mml:mprescripts/> and empty <mml:mrow/> intact after cleanContent()
-        $secondDispMath = $dispFormulas->item(1);
-        $this->assertEquals(1, $xpath->query('.//mml:mmultiscripts/mml:mprescripts', $secondDispMath)->count(), 'Empty mml:mprescripts must not be stripped by cleanContent');
-        $this->assertEquals(3, $xpath->query('.//mml:mmultiscripts/mml:mrow', $secondDispMath)->count(), 'Empty mml:mrow in mmultiscripts must not be stripped by cleanContent');
+        $secondDisp = $dispFormulas->item(1);
+        $this->assertEquals('e2', $secondDisp->getAttribute('id'));
+        $this->assertEquals(1, $xpath->query('.//mml:mmultiscripts/mml:mprescripts', $secondDisp)->count(), 'Empty mml:mprescripts must not be stripped by cleanContent');
+        $this->assertEquals(3, $xpath->query('.//mml:mmultiscripts/mml:mrow', $secondDisp)->count(), 'Empty mml:mrow in mmultiscripts must not be stripped by cleanContent');
+
+        // 4. Check 1-row 2-cell equation layout table is converted to disp-formula with <label>(3)</label> instead of table-wrap
+        $thirdDisp = $dispFormulas->item(2);
+        $this->assertEquals('e3', $thirdDisp->getAttribute('id'));
+        $this->assertEquals('(3)', $xpath->evaluate('string(label)', $thirdDisp));
+        $this->assertEquals(0, $xpath->query('//body//table-wrap')->count(), 'Equation layout table must not produce a table-wrap');
     }
 
     public function testFallbackDomConverterMatchesXsltStructure(): void
@@ -115,12 +124,17 @@ class FormulaConversionTest extends TestCase
             . '<m:e><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:rad><m:radPr><m:degHide m:val="1"/></m:radPr><m:deg/><m:e><m:r><m:t>x</m:t></m:r></m:e></m:rad></m:den></m:f></m:e>'
             . '</m:nary>'
             . '</m:oMath></m:oMathPara>'
+            . '<w:r><w:t>(1)</w:t></w:r>'
             . '</w:p>'
             . '<w:p>'
             . '<m:oMathPara><m:oMath>'
             . '<m:sPre><m:sub><m:r><m:t>0</m:t></m:r></m:sub><m:sup/><m:e><m:r><m:t>F</m:t></m:r></m:e></m:sPre>'
             . '</m:oMath></m:oMathPara>'
             . '</w:p>'
+            . '<w:tbl><w:tr>'
+            . '<w:tc><w:p><m:oMathPara><m:oMath><m:r><m:t>a=b</m:t></m:r></m:oMath></m:oMathPara></w:p></w:tc>'
+            . '<w:tc><w:p><w:r><w:t>(3)</w:t></w:r></w:p></w:tc>'
+            . '</w:tr></w:tbl>'
             . '</w:body>'
             . '</w:document>';
 
